@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "playerparticles",
+  "version": "${version}",
+  "name": "Player Particles",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "GPLv3",
+  "icon": "assets/playerparticles/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [],
+    "main": [
+      "xyz.eclipseisoffline.playerparticles.PlayerParticlesInitializer"
+    ]
+  },
+  "mixins": [
+    "playerparticles.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "fabric-permissions-api-v0": "*"
+  }
+}
