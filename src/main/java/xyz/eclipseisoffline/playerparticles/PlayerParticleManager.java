@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -80,6 +81,12 @@ public class PlayerParticleManager extends SavedData {
                 }
                 playerParticleOptions.setParticle(slot, new ParticleWithData(playerParticle, particleData));
             }
+
+            boolean enabled = true;
+            if (particleTag.contains("enabled", Tag.TAG_BYTE)) {
+                enabled = particleTag.getBoolean("enabled");
+            }
+            playerParticleOptions.enabled = enabled;
             try {
                 particleManager.playerParticles.put(UUID.fromString(uuid), playerParticleOptions);
             } catch (IllegalArgumentException ignored) {}
@@ -109,6 +116,7 @@ public class PlayerParticleManager extends SavedData {
                 }
                 particleTag.put(slot.toString(), slotTag);
             }
+            particleTag.putBoolean("enabled", particleOptions.enabled);
             playerParticlesTag.put(playerParticleOptions.getKey().toString(), particleTag);
         }
 
