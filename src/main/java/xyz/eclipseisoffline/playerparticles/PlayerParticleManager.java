@@ -83,10 +83,15 @@ public class PlayerParticleManager extends SavedData {
             }
 
             boolean enabled = true;
+            boolean allDisabled = false;
             if (particleTag.contains("enabled", Tag.TAG_BYTE)) {
                 enabled = particleTag.getBoolean("enabled");
             }
+            if (particleTag.contains("allDisabled", Tag.TAG_BYTE)) {
+                allDisabled = particleTag.getBoolean("allDisabled");
+            }
             playerParticleOptions.enabled = enabled;
+            playerParticleOptions.allDisabled = allDisabled;
             try {
                 particleManager.playerParticles.put(UUID.fromString(uuid), playerParticleOptions);
             } catch (IllegalArgumentException ignored) {}
@@ -117,6 +122,7 @@ public class PlayerParticleManager extends SavedData {
                 particleTag.put(slot.toString(), slotTag);
             }
             particleTag.putBoolean("enabled", particleOptions.enabled);
+            particleTag.putBoolean("allDisabled", particleOptions.allDisabled);
             playerParticlesTag.put(playerParticleOptions.getKey().toString(), particleTag);
         }
 
@@ -161,6 +167,16 @@ public class PlayerParticleManager extends SavedData {
         setDirty();
     }
 
+    public boolean hasAllDisables(ServerPlayer player) {
+        return getOrCreateParticleOptions(player).allDisabled;
+    }
+
+    public void setAllDisabled(ServerPlayer player, boolean disabled) {
+        PlayerParticleOptions playerParticleOptions = getOrCreateParticleOptions(player);
+        playerParticleOptions.allDisabled = disabled;
+        setDirty();
+    }
+
     private PlayerParticleOptions getOrCreateParticleOptions(ServerPlayer player) {
         PlayerParticleOptions playerParticleOptions = playerParticles.get(player.getUUID());
         if (playerParticleOptions == null) {
@@ -173,6 +189,7 @@ public class PlayerParticleManager extends SavedData {
     private static class PlayerParticleOptions {
         private final Map<ParticleSlot, ParticleWithData> particles = new HashMap<>();
         private boolean enabled = true;
+        private boolean allDisabled = false;
 
         private ParticleWithData getParticle(ParticleSlot slot) {
             return particles.get(slot);

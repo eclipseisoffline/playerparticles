@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,7 +31,7 @@ public class ItemParticleData extends SimpleDataHolder<Item> {
     @Override
     public ParticleData<Item> parseData(CommandContext<CommandSourceStack> context, String input)
             throws CommandSyntaxException {
-        Registry<Item> itemRegistry = getItemRegistry(context);
+        Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
 
         ResourceLocation itemId = ResourceLocation.tryParse(input);
         if (itemId == null) {
@@ -38,7 +39,7 @@ public class ItemParticleData extends SimpleDataHolder<Item> {
         }
 
         Item item = itemRegistry.get(itemId);
-        if (item == null || item == Items.AIR) {
+        if (item == Items.AIR) {
             throw new SimpleCommandExceptionType(Component.literal("Unknown item ID " + itemId)).create();
         }
 
@@ -47,14 +48,14 @@ public class ItemParticleData extends SimpleDataHolder<Item> {
 
     @Override
     public Item readData(ServerLevel level, CompoundTag tag) {
-        Registry<Item> itemRegistry = getItemRegistry(level);
+        Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         String itemId = tag.getString("item");
         return itemRegistry.get(ResourceLocation.tryParse(itemId));
     }
 
     @Override
     public void saveData(ServerLevel level, CompoundTag tag) {
-        Registry<Item> itemRegistry = getItemRegistry(level);
+        Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         String itemId = Objects.requireNonNull(itemRegistry.getKey(getData())).toString();
         tag.putString("item", itemId);
     }
@@ -62,16 +63,7 @@ public class ItemParticleData extends SimpleDataHolder<Item> {
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context,
             SuggestionsBuilder builder) {
-        Registry<Item> itemRegistry = getItemRegistry(context);
+        Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         return SharedSuggestionProvider.suggestResource(itemRegistry.keySet(), builder);
-    }
-
-    private Registry<Item> getItemRegistry(CommandContext<CommandSourceStack> context) {
-        return getItemRegistry(context.getSource().getLevel());
-    }
-
-    private Registry<Item> getItemRegistry(ServerLevel level) {
-        Optional<Registry<Item>> itemRegistry = level.registryAccess().registry(Registries.ITEM);
-        return itemRegistry.orElseThrow();
     }
 }

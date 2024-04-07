@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
+import xyz.eclipseisoffline.playerparticles.PlayerParticleManager;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
@@ -17,8 +18,9 @@ public interface PlayerParticle {
 
     default void sendParticles(ServerLevel level, ParticleOptions particleOptions,
             Vec3 pos, Vec3 offset, int count, double speed) {
-        level.sendParticles(particleOptions, pos.x, pos.y, pos.z,
-                count, offset.x, offset.y, offset.z, speed);
+        PlayerParticleManager particleManager = PlayerParticleManager.getInstance(level.getServer());
+        level.getPlayers(player -> !particleManager.hasAllDisables(player)).forEach(player
+                -> level.sendParticles(player, particleOptions, false, pos.x, pos.y, pos.z, count, offset.x, offset.y, offset.z, speed));
     }
 
     default ParticleDataType<?> getParticleDataType() {

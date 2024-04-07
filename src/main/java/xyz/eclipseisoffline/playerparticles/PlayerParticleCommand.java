@@ -62,6 +62,24 @@ public class PlayerParticleCommand {
                             context.getSource().sendSuccess(() -> Component.literal("Turned player particles on"), true);
                             return 0;
                         })
+                )
+                .then(Commands.literal("disable-all")
+                        .executes(context -> {
+                            ServerPlayer player = context.getSource().getPlayerOrException();
+                            PlayerParticleManager particleManager = PlayerParticleManager.getInstance(context.getSource().getServer());
+                            particleManager.setAllDisabled(player, true);
+                            context.getSource().sendSuccess(() -> Component.literal("Turned all player particles off"), true);
+                            return 0;
+                        })
+                )
+                .then(Commands.literal("enable-all")
+                        .executes(context -> {
+                            ServerPlayer player = context.getSource().getPlayerOrException();
+                            PlayerParticleManager particleManager = PlayerParticleManager.getInstance(context.getSource().getServer());
+                            particleManager.setAllDisabled(player, false);
+                            context.getSource().sendSuccess(() -> Component.literal("Turned all player particles on"), true);
+                            return 0;
+                        })
                 );
 
         dispatcher.register(command);

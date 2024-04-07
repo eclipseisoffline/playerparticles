@@ -55,6 +55,12 @@ public enum PlayerParticles {
     WARPED(new SimplePlayerParticle.Builder(ParticleTypes.WARPED_SPORE)
             .withSlot(ParticleSlot.AROUND, 3, 0.15)
             .build()),
+    ASH(new SimplePlayerParticle.Builder(ParticleTypes.ASH)
+            .withSlot(ParticleSlot.AROUND, 3, 0.15)
+            .build()),
+    ENCHANT(new SimplePlayerParticle.Builder(ParticleTypes.ENCHANT)
+            .withSlot(ParticleSlot.AROUND)
+            .build()),
     COLOR(new ColorParticle()),
     FLAG(new FlagParticle()),
     ITEM(new ItemParticle());
