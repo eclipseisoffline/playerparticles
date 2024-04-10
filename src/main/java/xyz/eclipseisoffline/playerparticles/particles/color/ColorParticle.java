@@ -1,6 +1,7 @@
 package xyz.eclipseisoffline.playerparticles.particles.color;
 
 import java.util.List;
+import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,9 +24,15 @@ public class ColorParticle implements PlayerParticle {
         List<ColorData> colors = (List<ColorData>) data.getData();
         int i = (int) ((level.getGameTime() / COLOR_TIME) % colors.size());
 
-        ColorData color = colors.get(i);
+        int j = i + 1;
+        if (j >= colors.size()) {
+            j = 0;
+        }
+
+        ColorData firstColor = colors.get(i);
+        ColorData secondColor = colors.get(j);
         sendParticles(level,
-                new DustParticleOptions(new Vector3f(color.red(), color.green(), color.blue()), 1.0F),
+                new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F),
                 defaultParticlePos(player, slot),
                 defaultParticleOffset(slot), slot == ParticleSlot.AROUND ? 2 : 5, 1.0);
     }

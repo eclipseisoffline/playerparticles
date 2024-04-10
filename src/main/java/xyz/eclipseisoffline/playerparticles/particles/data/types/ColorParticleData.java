@@ -16,6 +16,7 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import org.joml.Vector3f;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.SimpleDataHolder;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData.ColorData;
@@ -96,6 +97,10 @@ public class ColorParticleData extends SimpleDataHolder<List<ColorData>> {
             float fGreen = (float) green / 0xFF;
             float fBlue = (float) blue / 0xFF;
             return new ColorData(fRed, fGreen, fBlue);
+        }
+
+        public Vector3f toVector() {
+            return new Vector3f(red, green, blue);
         }
     }
 }
