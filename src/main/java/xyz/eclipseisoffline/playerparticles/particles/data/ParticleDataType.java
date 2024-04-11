@@ -12,6 +12,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData.ColorData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.FlagParticleData;
@@ -20,7 +21,7 @@ import xyz.eclipseisoffline.playerparticles.particles.data.types.ItemParticleDat
 public class ParticleDataType<T> implements SuggestionProvider<CommandSourceStack> {
     public static final ParticleDataType<List<ColorData>> COLOR = new ParticleDataType<>(ColorParticleData::new);
     public static final ParticleDataType<List<ColorData>> FLAG = new ParticleDataType<>(FlagParticleData::new);
-    public static final ParticleDataType<Item> ITEM = new ParticleDataType<>(ItemParticleData::new);
+    public static final ParticleDataType<ItemStack> ITEM = new ParticleDataType<>(ItemParticleData::new);
 
     private final Function<T, ParticleData<T>> constructor;
     private final ParticleData<T> baseInstance;

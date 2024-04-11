@@ -142,7 +142,7 @@ public class PlayerParticleCommand {
 
             if  (particleData != null && particleDataType != null) {
                 data = particleDataType.parseData(context, particleData);
-            } else if (particleData == null && particleDataType != null) {
+            } else if (particleData == null && particle.particleDataRequired()) {
                 throw new SimpleCommandExceptionType(Component.literal("Particle expects data but none was given")).create();
             }
 

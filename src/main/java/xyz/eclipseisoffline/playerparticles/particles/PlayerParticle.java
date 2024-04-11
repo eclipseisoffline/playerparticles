@@ -27,6 +27,10 @@ public interface PlayerParticle {
         return null;
     }
 
+    default boolean particleDataRequired() {
+        return getParticleDataType() != null;
+    }
+
     default Vec3 defaultParticlePos(ServerPlayer player, ParticleSlot slot) {
         switch (slot) {
             case ABOVE -> {

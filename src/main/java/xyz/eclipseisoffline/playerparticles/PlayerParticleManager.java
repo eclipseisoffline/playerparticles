@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
@@ -39,7 +40,7 @@ public class PlayerParticleManager extends SavedData {
     private static Factory<PlayerParticleManager> managerFactory(ServerLevel level) {
         return new Factory<>(
                 () -> new PlayerParticleManager(level),
-                tag -> read(level, tag), null);
+                (tag, provider) -> read(level, tag), null);
     }
 
     private static PlayerParticleManager read(ServerLevel level, CompoundTag playerParticlesTag) {
@@ -101,7 +102,7 @@ public class PlayerParticleManager extends SavedData {
     }
 
     @Override
-    public @NotNull CompoundTag save(CompoundTag playerParticlesTag) {
+    public @NotNull CompoundTag save(CompoundTag playerParticlesTag, HolderLookup.Provider provider) {
         ParticleRegistry particleRegistry = ParticleRegistry.getInstance();
 
         for (Entry<UUID, PlayerParticleOptions> playerParticleOptions : playerParticles.entrySet()) {

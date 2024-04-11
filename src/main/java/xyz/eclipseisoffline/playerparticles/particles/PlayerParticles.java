@@ -5,6 +5,7 @@ import xyz.eclipseisoffline.playerparticles.ParticleRegistry;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagParticle;
+import xyz.eclipseisoffline.playerparticles.particles.color.PotionParticle;
 import xyz.eclipseisoffline.playerparticles.particles.item.ItemParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.AmbientPlusParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SimplePlayerParticle;
@@ -25,9 +26,7 @@ public enum PlayerParticles {
             .withSlot(ParticleSlot.BELOW, 5, 0.01)
             .build()),
     END(new SimplePlayerParticle(ParticleTypes.PORTAL, ParticleSlot.AROUND)),
-    POTION(new SimplePlayerParticle.Builder(ParticleTypes.AMBIENT_ENTITY_EFFECT)
-            .withSlot(ParticleSlot.AROUND, 5, 1.0)
-            .build()),
+    POTION(new PotionParticle()),
     NECTAR(new SimplePlayerParticle.Builder(ParticleTypes.FALLING_NECTAR)
             .withSlot(ParticleSlot.AROUND, 1, 0.01)
             .withSlot(ParticleSlot.BELOW)

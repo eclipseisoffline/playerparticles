@@ -19,9 +19,7 @@ public class ColorParticle implements PlayerParticle {
     @Override
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
             ParticleData<?> data) {
-        assert data instanceof ColorParticleData;
-
-        List<ColorData> colors = (List<ColorData>) data.getData();
+        List<ColorData> colors = ((ColorParticleData) data).getData();
         int i = (int) ((level.getGameTime() / COLOR_TIME) % colors.size());
 
         int j = i + 1;

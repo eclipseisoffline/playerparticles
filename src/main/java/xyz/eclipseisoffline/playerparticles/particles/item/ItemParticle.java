@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
@@ -18,7 +19,7 @@ public class ItemParticle implements PlayerParticle {
             ParticleData<?> data) {
         assert data instanceof ItemParticleData;
         sendParticles(level,
-                new ItemParticleOption(ParticleTypes.ITEM, ((Item) data.getData()).getDefaultInstance()),
+                new ItemParticleOption(ParticleTypes.ITEM, ((ItemParticleData) data).getData()),
                 defaultParticlePos(player, slot), defaultParticleOffset(slot), 5, 0.05);
     }
 
