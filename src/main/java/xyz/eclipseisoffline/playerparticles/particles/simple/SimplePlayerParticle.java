@@ -16,6 +16,11 @@ public class SimplePlayerParticle implements PlayerParticle {
         this(particle, ParticleSlot.values());
     }
 
+    public SimplePlayerParticle(ParticleOptions particle, ParticleSlot slot,
+            int count, double speed) {
+        this(new Builder(particle).withSlot(slot, count, speed));
+    }
+
     public SimplePlayerParticle(ParticleOptions particle, ParticleSlot... slots) {
         this(new SimpleParticleSettings(particle, slots));
     }
@@ -32,8 +37,7 @@ public class SimplePlayerParticle implements PlayerParticle {
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
             ParticleData<?> data) {
         if (settings.interval > 1) {
-            assert player.getServer() != null;
-            if (player.getServer().getTickCount() % settings.interval != 0) {
+            if (level.getServer().getTickCount() % settings.interval != 0) {
                 return;
             }
         }
@@ -122,10 +126,6 @@ public class SimplePlayerParticle implements PlayerParticle {
 
         private double getSpeed(ParticleSlot slot) {
             return particleSpeeds.get(slot);
-        }
-
-        public int getInterval() {
-            return interval;
         }
     }
 }

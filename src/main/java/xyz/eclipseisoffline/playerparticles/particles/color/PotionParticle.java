@@ -1,6 +1,7 @@
 package xyz.eclipseisoffline.playerparticles.particles.color;
 
 import java.util.List;
+import net.minecraft.Util;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -19,7 +20,7 @@ public class PotionParticle extends ColorParticle {
         ColorData color;
         if (data != null) {
             List<ColorData> colors = ((ColorParticleData) data).getData();
-            color = colors.get(level.random.nextInt(colors.size()));
+            color = Util.getRandom(colors, level.random);
         } else {
             color = ColorData.fromInt(level.random.nextIntBetweenInclusive(0, 0xFFFFFF));
         }

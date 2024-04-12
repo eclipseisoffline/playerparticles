@@ -1,6 +1,8 @@
 package xyz.eclipseisoffline.playerparticles.particles;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SculkChargeParticleOptions;
+import net.minecraft.core.particles.ShriekParticleOption;
 import xyz.eclipseisoffline.playerparticles.ParticleRegistry;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
@@ -9,6 +11,7 @@ import xyz.eclipseisoffline.playerparticles.particles.color.PotionParticle;
 import xyz.eclipseisoffline.playerparticles.particles.item.ItemParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.AmbientPlusParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SimplePlayerParticle;
+import xyz.eclipseisoffline.playerparticles.particles.simple.SonicBoomParticle;
 
 public enum PlayerParticles {
     NOTE(new SimplePlayerParticle.Builder(ParticleTypes.NOTE)
@@ -26,7 +29,6 @@ public enum PlayerParticles {
             .withSlot(ParticleSlot.BELOW, 5, 0.01)
             .build()),
     END(new SimplePlayerParticle(ParticleTypes.PORTAL, ParticleSlot.AROUND)),
-    POTION(new PotionParticle()),
     NECTAR(new SimplePlayerParticle.Builder(ParticleTypes.FALLING_NECTAR)
             .withSlot(ParticleSlot.AROUND, 1, 0.01)
             .withSlot(ParticleSlot.BELOW)
@@ -48,18 +50,58 @@ public enum PlayerParticles {
     HEART(new AmbientPlusParticle(ParticleTypes.HEART, 0.15)),
     DOLPHIN(new SimplePlayerParticle(ParticleTypes.DOLPHIN, ParticleSlot.AROUND, ParticleSlot.BELOW)),
     SPORE_BLOSSOM(new SimplePlayerParticle(ParticleTypes.SPORE_BLOSSOM_AIR, ParticleSlot.AROUND)),
-    CRIMSON(new SimplePlayerParticle.Builder(ParticleTypes.CRIMSON_SPORE)
-            .withSlot(ParticleSlot.AROUND, 3, 0.15)
+    CRIMSON(new SimplePlayerParticle(ParticleTypes.CRIMSON_SPORE, ParticleSlot.AROUND, 3, 0.15)),
+    WARPED(new SimplePlayerParticle(ParticleTypes.WARPED_SPORE, ParticleSlot.AROUND, 3, 0.15)),
+    ASH(new SimplePlayerParticle(ParticleTypes.ASH, ParticleSlot.AROUND, 3, 0.15)),
+    ENCHANT(new SimplePlayerParticle(ParticleTypes.ENCHANT, ParticleSlot.AROUND)),
+    INFESTED(new SimplePlayerParticle.Builder(ParticleTypes.INFESTED)
+            .withSlot(ParticleSlot.AROUND, 1, 1.0)
+            .withSlot(ParticleSlot.ABOVE)
             .build()),
-    WARPED(new SimplePlayerParticle.Builder(ParticleTypes.WARPED_SPORE)
-            .withSlot(ParticleSlot.AROUND, 3, 0.15)
-            .build()),
-    ASH(new SimplePlayerParticle.Builder(ParticleTypes.ASH)
-            .withSlot(ParticleSlot.AROUND, 3, 0.15)
-            .build()),
-    ENCHANT(new SimplePlayerParticle.Builder(ParticleTypes.ENCHANT)
+    SMALL_GUST(new SimplePlayerParticle.Builder(ParticleTypes.SMALL_GUST)
             .withSlot(ParticleSlot.AROUND)
+            .withSlot(ParticleSlot.ABOVE, 1, 1.0)
+            .withInterval(20)
             .build()),
+    RED_OMEN(new SimplePlayerParticle(ParticleTypes.RAID_OMEN, ParticleSlot.AROUND, 1, 1.0)),
+    BLUE_OMEN(new SimplePlayerParticle(ParticleTypes.TRIAL_OMEN, ParticleSlot.AROUND, 1, 1.0)),
+    OMINOUS_SPAWNING(new SimplePlayerParticle(ParticleTypes.OMINOUS_SPAWNING, ParticleSlot.AROUND, 3, 0.5)),
+    RED_BAR(new SimplePlayerParticle.Builder(ParticleTypes.TRIAL_SPAWNER_DETECTED_PLAYER)
+            .withSlot(ParticleSlot.AROUND, 1, 0.01)
+            .withSlot(ParticleSlot.ABOVE, 1, 0.01)
+            .build()),
+    BLUE_BAR(new SimplePlayerParticle.Builder(ParticleTypes.TRIAL_SPAWNER_DETECTED_PLAYER_OMINOUS)
+            .withSlot(ParticleSlot.AROUND, 1, 0.01)
+            .withSlot(ParticleSlot.ABOVE, 1, 0.01)
+            .build()),
+    DRIPPING_HONEY(new SimplePlayerParticle(ParticleTypes.FALLING_HONEY, ParticleSlot.BELOW)),
+    DRIPPING_LAVA(new SimplePlayerParticle(ParticleTypes.DRIPPING_LAVA, ParticleSlot.BELOW, 1, 1.0)),
+    DRIPPING_OBSIDIAN(new SimplePlayerParticle(ParticleTypes.FALLING_OBSIDIAN_TEAR, ParticleSlot.BELOW)),
+    DRIPPING_WATER(new SimplePlayerParticle(ParticleTypes.DRIPPING_WATER, ParticleSlot.BELOW, 1, 1.0)),
+    FIREWORK(new SimplePlayerParticle.Builder(ParticleTypes.FIREWORK)
+            .withSlot(ParticleSlot.BELOW, 1, 0.01)
+            .withSlot(ParticleSlot.AROUND, 1, 0.1)
+            .build()),
+    FLAME(new SimplePlayerParticle.Builder(ParticleTypes.FLAME)
+            .withSlot(ParticleSlot.AROUND, 1, 0.1)
+            .withSlot(ParticleSlot.ABOVE, 1, 0.01)
+            .withInterval(3)
+            .build()),
+    LAVA(new SimplePlayerParticle.Builder(ParticleTypes.LAVA)
+            .withSlot(ParticleSlot.AROUND, 1, 0.1)
+            .withSlot(ParticleSlot.ABOVE, 1, 0.1)
+            .withInterval(10)
+            .build()),
+    SCRAPE(new AmbientPlusParticle(ParticleTypes.SCRAPE, 0.25)),
+    SCULK_CHARGE(new SimplePlayerParticle(new SculkChargeParticleOptions(0.0F), ParticleSlot.BELOW, 5, 0.01)),
+    TOTEM(new SimplePlayerParticle(ParticleTypes.TOTEM_OF_UNDYING, ParticleSlot.BELOW, 5, 0.1)),
+    SHRIEK(new SimplePlayerParticle.Builder(new ShriekParticleOption(0))
+            .withSlot(ParticleSlot.ABOVE)
+            .build()),
+    WAX_OFF(new AmbientPlusParticle(ParticleTypes.WAX_OFF, 0.25)),
+    WAX_ON(new AmbientPlusParticle(ParticleTypes.WAX_ON, 0.25)),
+    SONIC_BOOM(new SonicBoomParticle()),
+    POTION(new PotionParticle()),
     COLOR(new ColorParticle()),
     FLAG(new FlagParticle()),
     ITEM(new ItemParticle());
