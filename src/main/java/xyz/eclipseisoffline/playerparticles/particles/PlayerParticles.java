@@ -47,7 +47,11 @@ public enum PlayerParticles {
     COMPOSTER(new AmbientPlusParticle(ParticleTypes.COMPOSTER)),
     GLOW(new AmbientPlusParticle(ParticleTypes.GLOW)),
     ELECTRIC_SPARK(new AmbientPlusParticle(ParticleTypes.ELECTRIC_SPARK)),
-    HEART(new AmbientPlusParticle(ParticleTypes.HEART, 0.15)),
+    HEART(new SimplePlayerParticle.Builder(ParticleTypes.HEART)
+            .withSlot(ParticleSlot.AROUND, 4, 0.25)
+            .withSlot(ParticleSlot.ABOVE, 1, 0.25)
+            .withInterval(15)
+            .build()),
     DOLPHIN(new SimplePlayerParticle(ParticleTypes.DOLPHIN, ParticleSlot.AROUND, ParticleSlot.BELOW)),
     SPORE_BLOSSOM(new SimplePlayerParticle(ParticleTypes.SPORE_BLOSSOM_AIR, ParticleSlot.AROUND)),
     CRIMSON(new SimplePlayerParticle(ParticleTypes.CRIMSON_SPORE, ParticleSlot.AROUND, 3, 0.15)),
