@@ -17,17 +17,24 @@ public class PotionParticle extends ColorParticle {
     @Override
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
             ParticleData<?> data) {
-        ColorData color;
+        float red;
+        float green;
+        float blue;
         if (data != null) {
             List<ColorData> colors = ((ColorParticleData) data).getData();
-            color = Util.getRandom(colors, level.random);
+            ColorData color = Util.getRandom(colors, level.random);
+            red = color.red();
+            green = color.green();
+            blue = color.blue();
         } else {
-            color = ColorData.fromInt(level.random.nextIntBetweenInclusive(0, 0xFFFFFF));
+            red = level.random.nextFloat();
+            green = level.random.nextFloat();
+            blue = level.random.nextFloat();
         }
 
         sendParticles(level,
                 ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT,
-                        ARGB32.colorFromFloat(0.3F, color.red(), color.green(), color.blue())),
+                        ARGB32.colorFromFloat(0.2F, red, green, blue)),
                 defaultParticlePos(player, slot), defaultParticleOffset(slot),
                 5, 1.0);
     }
