@@ -22,14 +22,14 @@ public class PotionParticle extends ColorParticle {
         float blue;
         if (data != null) {
             List<ColorData> colors = ((ColorParticleData) data).getData();
-            ColorData color = Util.getRandom(colors, level.random);
+            ColorData color = Util.getRandom(colors, player.getRandom());
             red = color.red();
             green = color.green();
             blue = color.blue();
         } else {
-            red = level.random.nextFloat();
-            green = level.random.nextFloat();
-            blue = level.random.nextFloat();
+            red = player.getRandom().nextFloat();
+            green = player.getRandom().nextFloat();
+            blue = player.getRandom().nextFloat();
         }
 
         sendParticles(level,

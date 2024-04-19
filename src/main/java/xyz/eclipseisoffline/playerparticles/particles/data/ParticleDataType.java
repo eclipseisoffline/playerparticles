@@ -11,7 +11,6 @@ import java.util.function.Function;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData.ColorData;
