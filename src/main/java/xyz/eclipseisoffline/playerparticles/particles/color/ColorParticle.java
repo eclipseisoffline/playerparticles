@@ -29,7 +29,7 @@ public class ColorParticle implements PlayerParticle {
 
         ColorData firstColor = colors.get(i);
         ColorData secondColor = colors.get(j);
-        sendParticles(level,
+        sendParticles(level, player,
                 new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F),
                 defaultParticlePos(player, slot),
                 defaultParticleOffset(slot), slot == ParticleSlot.AROUND ? 2 : 5, 1.0);

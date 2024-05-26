@@ -42,7 +42,7 @@ public class SimplePlayerParticle implements PlayerParticle {
             }
         }
 
-        sendParticles(level, settings.particleOptions,
+        sendParticles(level, player, settings.particleOptions,
                 defaultParticlePos(player, slot), defaultParticleOffset(slot),
                 settings.getCount(slot), settings.getSpeed(slot));
     }

@@ -24,7 +24,8 @@ public class SonicBoomParticle implements PlayerParticle {
         Vec3 looking = player.getLookAngle();
         for (int i = 1; i <= ITERATIONS; i++) {
             Vec3 pos = start.add(looking.multiply(new Vec3(GAP * i, GAP * i, GAP * i)));
-            sendParticles(level, ParticleTypes.SONIC_BOOM, pos, Vec3.ZERO, 1, 1.0);
+            sendParticles(level, player,
+                    ParticleTypes.SONIC_BOOM, pos, Vec3.ZERO, 1, 1.0);
         }
     }
 

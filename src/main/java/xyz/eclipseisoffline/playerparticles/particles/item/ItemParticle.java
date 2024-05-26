@@ -18,7 +18,7 @@ public class ItemParticle implements PlayerParticle {
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
             ParticleData<?> data) {
         assert data instanceof ItemParticleData;
-        sendParticles(level,
+        sendParticles(level, player,
                 new ItemParticleOption(ParticleTypes.ITEM, ((ItemParticleData) data).getData()),
                 defaultParticlePos(player, slot), defaultParticleOffset(slot), 5, 0.05);
     }

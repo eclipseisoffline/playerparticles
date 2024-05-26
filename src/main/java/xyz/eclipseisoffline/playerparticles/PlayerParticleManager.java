@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
-import xyz.eclipseisoffline.playerparticles.particles.PlayerParticles;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
@@ -168,7 +167,7 @@ public class PlayerParticleManager extends SavedData {
         setDirty();
     }
 
-    public boolean hasAllDisables(ServerPlayer player) {
+    public boolean hasAllDisabled(ServerPlayer player) {
         return getOrCreateParticleOptions(player).allDisabled;
     }
 
