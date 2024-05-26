@@ -2,10 +2,8 @@ package xyz.eclipseisoffline.playerparticles.particles.color;
 
 import java.util.List;
 import net.minecraft.core.particles.DustColorTransitionOptions;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import org.joml.Vector3f;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
