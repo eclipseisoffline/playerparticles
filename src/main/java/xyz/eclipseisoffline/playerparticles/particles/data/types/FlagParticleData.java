@@ -5,10 +5,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.commands.CommandSourceStack;
@@ -60,7 +58,8 @@ public class FlagParticleData extends ColorParticleData {
         LIBRAMASCULINE(0x000000, 0xA3A3A3, 0xFFFFFF, 0x56C5C5, 0xFFFFFF, 0xA3A3A3, 0x000000),
         AGENDER(0x000000, 0xBCC4C6, 0xFFFFFF, 0xB5F682, 0xFFFFFF, 0xBCC4C6, 0x000000),
         DEMIBOY(0x7F7F7F, 0xC3C3C3, 0x99D9EA, 0xFFFFFF, 0x99D9EA, 0xC3C3C3, 0x7F7F7F),
-        DEMIGIRL(0x7F7F7F, 0xC3C3C3, 0xFFB0CA, 0xFFFFFF, 0xFFB0CA, 0xC3C3C3, 0x7F7F7F);
+        DEMIGIRL(0x7F7F7F, 0xC3C3C3, 0xFFB0CA, 0xFFFFFF, 0xFFB0CA, 0xC3C3C3, 0x7F7F7F),
+        AROACE(0x38D00, 0xE7C601, 0xFFFFFF, 0x5FAAD7, 0x1F3554);
 
         private final List<ColorData> colors;
         Flag(int... colors) {
