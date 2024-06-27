@@ -11,7 +11,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
@@ -28,12 +27,7 @@ public class PlayerParticleManager extends SavedData {
     }
 
     public static PlayerParticleManager getInstance(MinecraftServer server) {
-        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-        if (overworld == null) {
-            throw new IllegalStateException("Overworld level cannot be null");
-        }
-
-        return overworld.getDataStorage().computeIfAbsent(managerFactory(overworld), SAVE_FILE);
+        return server.overworld().getDataStorage().computeIfAbsent(managerFactory(server.overworld()), SAVE_FILE);
     }
 
     private static Factory<PlayerParticleManager> managerFactory(ServerLevel level) {

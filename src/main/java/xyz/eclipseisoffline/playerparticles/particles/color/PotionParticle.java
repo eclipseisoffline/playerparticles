@@ -33,8 +33,7 @@ public class PotionParticle extends ColorParticle {
         }
 
         sendParticles(level, player,
-                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT,
-                        ARGB32.colorFromFloat(0.2F, red, green, blue)),
+                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, ARGB32.colorFromFloat(0.2F, red, green, blue)),
                 defaultParticlePos(player, slot), defaultParticleOffset(slot),
                 5, 1.0);
     }

@@ -20,6 +20,10 @@ public class FlagParticleData extends ColorParticleData {
         super(colors);
     }
 
+    private FlagParticleData(Flag flag) {
+        super(flag.colors);
+    }
+
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context,
             SuggestionsBuilder builder) {
@@ -34,7 +38,7 @@ public class FlagParticleData extends ColorParticleData {
             String input) throws CommandSyntaxException {
         try {
             Flag flag = Flag.valueOf(input.toUpperCase());
-            return new FlagParticleData(flag.colors);
+            return new FlagParticleData(flag);
         } catch (IllegalArgumentException exception) {
             throw new SimpleCommandExceptionType(Component.literal("Unknown flag " + input)).create();
         }
@@ -59,7 +63,10 @@ public class FlagParticleData extends ColorParticleData {
         AGENDER(0x000000, 0xBCC4C6, 0xFFFFFF, 0xB5F682, 0xFFFFFF, 0xBCC4C6, 0x000000),
         DEMIBOY(0x7F7F7F, 0xC3C3C3, 0x99D9EA, 0xFFFFFF, 0x99D9EA, 0xC3C3C3, 0x7F7F7F),
         DEMIGIRL(0x7F7F7F, 0xC3C3C3, 0xFFB0CA, 0xFFFFFF, 0xFFB0CA, 0xC3C3C3, 0x7F7F7F),
-        AROACE(0xE38D00, 0xE7C601, 0xFFFFFF, 0x5FAAD7, 0x1F3554);
+        AROACE(0xE38D00, 0xE7C601, 0xFFFFFF, 0x5FAAD7, 0x1F3554),
+        VOIDPUNK(0X372E49, 0x9E74B6, 0xE9E9E9, 0x1B171E, 0xE9E9E9, 0x51AC56, 0x20452C),
+        TRANSFEMININE(0xFFFFFF, 0xF7ADB9, 0xDA4386, 0x272929),
+        TRANSMASCULINE(0xFFFFFF, 0x5FCEF5, 0x4370B7, 0x272929);
 
         private final List<ColorData> colors;
         Flag(int... colors) {

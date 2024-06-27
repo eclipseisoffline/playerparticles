@@ -2,6 +2,7 @@ package xyz.eclipseisoffline.playerparticles.particles.color;
 
 import java.util.List;
 import net.minecraft.core.particles.DustColorTransitionOptions;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
@@ -28,9 +29,13 @@ public class ColorParticle implements PlayerParticle {
         ColorData firstColor = colors.get(i);
         ColorData secondColor = colors.get(j);
         sendParticles(level, player,
-                new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F),
+                createColorParticle(firstColor, secondColor),
                 defaultParticlePos(player, slot),
                 defaultParticleOffset(slot), slot == ParticleSlot.AROUND ? 2 : 5, 1.0);
+    }
+
+    protected ParticleOptions createColorParticle(ColorData firstColor, ColorData secondColor) {
+        return new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F);
     }
 
     @Override
