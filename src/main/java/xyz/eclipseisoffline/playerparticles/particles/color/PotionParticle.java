@@ -6,7 +6,6 @@ import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ARGB;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;

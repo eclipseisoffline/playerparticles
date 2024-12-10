@@ -111,8 +111,7 @@ public enum PlayerParticles {
     COLOR(new ColorParticle()),
     FLAG(new FlagParticle()),
     FLAG_POTION(new FlagPotionParticle()),
-    ITEM(new ItemParticle()),
-    TARGET(new TargetColorParticle());
+    ITEM(new ItemParticle());
 
     private final PlayerParticle particle;
     PlayerParticles(PlayerParticle particle) {

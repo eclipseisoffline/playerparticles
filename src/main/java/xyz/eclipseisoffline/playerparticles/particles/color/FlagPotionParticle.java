@@ -13,4 +13,9 @@ public class FlagPotionParticle extends FlagParticle {
     protected ParticleOptions createColorParticle(ServerPlayer player, ParticleSlot slot, ColorParticleData.ColorData firstColor, ColorParticleData.ColorData secondColor) {
         return ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, firstColor.toInt(0.58F));
     }
+
+    @Override
+    public boolean canWear(ParticleSlot slot) {
+        return slot == ParticleSlot.AROUND;
+    }
 }
