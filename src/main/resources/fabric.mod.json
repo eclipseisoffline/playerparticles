@@ -3,10 +3,21 @@
   "id": "playerparticles",
   "version": "${version}",
   "name": "Player Particles",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "GPLv3",
+  "description": "Player Particles is a simple mod that allows you to display cool particles around yourself",
+  "authors": [
+    {
+      "name": "eclipseisoffline",
+      "contact": {
+        "homepage": "https://github.com/eclipseisoffline"
+      }
+    }
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/player-particles",
+    "issues": "https://github.com/eclipseisoffline/playerparticles/issues",
+    "sources": "https://github.com/eclipseisoffline/playerparticles"
+  },
+  "license": "LGPL-3.0-only",
   "icon": "assets/playerparticles/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -20,8 +31,17 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": "${supported_versions}",
     "fabric-permissions-api-v0": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.donate": "https://buymeacoffee.com/eclipseisoffline",
+        "modmenu.buymeacoffee": "https://buymeacoffee.com/eclipseisoffline",
+        "modmenu.modrinth": "https://modrinth.com/mod/player-particles"
+      }
+    }
   }
 }
