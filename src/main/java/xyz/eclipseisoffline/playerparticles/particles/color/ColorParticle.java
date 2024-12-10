@@ -29,13 +29,13 @@ public class ColorParticle implements PlayerParticle {
         ColorData firstColor = colors.get(i);
         ColorData secondColor = colors.get(j);
         sendParticles(level, player,
-                createColorParticle(firstColor, secondColor),
+                createColorParticle(player, slot, firstColor, secondColor),
                 defaultParticlePos(player, slot),
                 defaultParticleOffset(slot), slot == ParticleSlot.AROUND ? 2 : 5, 1.0);
     }
 
-    protected ParticleOptions createColorParticle(ColorData firstColor, ColorData secondColor) {
-        return new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F);
+    protected ParticleOptions createColorParticle(ServerPlayer player, ParticleSlot slot, ColorData firstColor, ColorData secondColor) {
+        return new DustColorTransitionOptions(firstColor.toInt(1.0F), secondColor.toInt(1.0F), 1.0F);
     }
 
     @Override

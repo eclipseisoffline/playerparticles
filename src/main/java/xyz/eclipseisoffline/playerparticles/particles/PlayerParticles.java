@@ -9,6 +9,7 @@ import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagPotionParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.PotionParticle;
+import xyz.eclipseisoffline.playerparticles.particles.color.TargetColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.item.ItemParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.AmbientPlusParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SimplePlayerParticle;
@@ -110,7 +111,8 @@ public enum PlayerParticles {
     COLOR(new ColorParticle()),
     FLAG(new FlagParticle()),
     FLAG_POTION(new FlagPotionParticle()),
-    ITEM(new ItemParticle());
+    ITEM(new ItemParticle()),
+    TARGET(new TargetColorParticle());
 
     private final PlayerParticle particle;
     PlayerParticles(PlayerParticle particle) {
@@ -119,7 +121,7 @@ public enum PlayerParticles {
 
     public static void registerPlayerParticles(ParticleRegistry registry) {
         for (PlayerParticles normalParticle : values()) {
-            registry.register(normalParticle.toString().toLowerCase(), normalParticle.particle);
+            registry.register(normalParticle.name().toLowerCase(), normalParticle.particle);
         }
     }
 }
