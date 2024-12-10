@@ -89,6 +89,7 @@ public class PlayerParticleCommand {
             LiteralArgumentBuilder<CommandSourceStack> base) {
         base.then(
                 Commands.literal(slot.getDisplayName())
+                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getDisplayName(), 2))
                         .then(Commands.argument("particle", StringArgumentType.word())
                                 .suggests(new PlayerParticleSuggestionProvider(slot))
                                 .then(Commands.argument("data", StringArgumentType.greedyString())

@@ -60,6 +60,12 @@ At the moment, 3 particle slots are available:
 - `around` - displays around you.
 - `below` - displays below you.
 
+### Permissions
+
+The `/playerparticles` command requires the `playerparticles.command` permission, or operator level 2.
+
+Since version `0.2.6-1.21.3`, each slot requires the `playerparticles.<slot name>` permission (or operator level 2) to be modified.
+
 ### Available particles
 
 These particles are available at the moment:

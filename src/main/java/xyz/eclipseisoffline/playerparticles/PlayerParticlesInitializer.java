@@ -10,10 +10,7 @@ import net.fabricmc.loader.api.Version;
 import net.minecraft.server.level.ServerPlayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticles;
-import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
-import xyz.eclipseisoffline.playerparticles.particles.color.FlagParticle;
 
 public class PlayerParticlesInitializer implements ModInitializer {
     public static final String MOD_ID = "playerparticles";
@@ -23,14 +20,13 @@ public class PlayerParticlesInitializer implements ModInitializer {
     @Override
     public void onInitialize() {
         Version modVersion = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata().getVersion();
-        LOGGER.info(MOD_ID + " version " + modVersion.getFriendlyString() + " initialising");
+        LOGGER.info("{} version {} initialising", MOD_ID, modVersion.getFriendlyString());
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             PlayerParticleCommand.register(dispatcher);
         });
 
-        ServerLifecycleEvents.SERVER_STARTED.register(
-                server -> particleManager = PlayerParticleManager.getInstance(server));
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> particleManager = PlayerParticleManager.getInstance(server));
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             List<ServerPlayer> players = server.getPlayerList().getPlayers();
@@ -46,6 +42,6 @@ public class PlayerParticlesInitializer implements ModInitializer {
         });
 
         PlayerParticles.registerPlayerParticles(ParticleRegistry.getInstance());
-        LOGGER.info("Registered " + PlayerParticles.values().length + " player particles");
+        LOGGER.info("Registered {} player particles", PlayerParticles.values().length);
     }
 }
