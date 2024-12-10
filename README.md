@@ -10,6 +10,8 @@
 Player Particles is a simple and easy mod to display particles around yourself in Minecraft. It supports various particles
 and command permissions.
 
+![Preview GIF](./preview.gif)
+
 ## License
 
 This mod is licensed under GNU LGPLv3.
