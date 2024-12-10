@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.FastColor;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;
@@ -16,16 +17,23 @@ public class PotionParticle extends ColorParticle {
     @Override
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
             ParticleData<?> data) {
-        ColorData color ;
+        float red;
+        float green;
+        float blue;
         if (data != null) {
             List<ColorData> colors = ((ColorParticleData) data).getData();
-            color = Util.getRandom(colors, player.getRandom());
+            ColorData color = Util.getRandom(colors, player.getRandom());
+            red = color.red();
+            green = color.green();
+            blue = color.blue();
         } else {
-            color = new ColorData(player.getRandom().nextFloat(), player.getRandom().nextFloat(), player.getRandom().nextFloat());
+            red = player.getRandom().nextFloat();
+            green = player.getRandom().nextFloat();
+            blue = player.getRandom().nextFloat();
         }
 
         sendParticles(level, player,
-                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, color.toInt(0.2F)),
+                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, FastColor.ARGB32.colorFromFloat(0.2F, red, green, blue)),
                 defaultParticlePos(player, slot), defaultParticleOffset(slot),
                 5, 1.0);
     }

@@ -35,7 +35,7 @@ public class ColorParticle implements PlayerParticle {
     }
 
     protected ParticleOptions createColorParticle(ServerPlayer player, ParticleSlot slot, ColorData firstColor, ColorData secondColor) {
-        return new DustColorTransitionOptions(firstColor.toInt(1.0F), secondColor.toInt(1.0F), 1.0F);
+        return new DustColorTransitionOptions(firstColor.toVector(), secondColor.toVector(), 1.0F);
     }
 
     @Override
