@@ -27,7 +27,7 @@ public interface PlayerParticle {
         Vec3 scaledOffset = offset.multiply(scale, scale, scale);
         PlayerParticleManager particleManager = PlayerParticleManager.getInstance(level.getServer());
         level.getPlayers(player -> !particleManager.hasAllDisabled(player)).forEach(player
-                -> level.sendParticles(player, particleOptions, false,
+                -> level.sendParticles(player, particleOptions, false, false,
                 pos.x, pos.y, pos.z, count, scaledOffset.x, scaledOffset.y, scaledOffset.z, speed));
     }
 
