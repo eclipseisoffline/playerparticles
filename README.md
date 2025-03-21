@@ -29,6 +29,7 @@ For support and/or any questions you may have, feel free to join [my discord](ht
 | Minecraft Version | Status       |
 |-------------------|--------------|
 | 1.21.4            | ✅ Current    |
+| 1.21.4            | ✔️ Available |
 | 1.21.2+3          | ✔️ Available |
 | 1.21+1            | ✅ Current    |
 | 1.20.5+6          | ✔️ Available |
