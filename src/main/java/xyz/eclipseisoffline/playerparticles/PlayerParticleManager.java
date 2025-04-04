@@ -2,51 +2,53 @@ package xyz.eclipseisoffline.playerparticles;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import net.minecraft.core.HolderLookup;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
 public class PlayerParticleManager extends SavedData {
-    private static final String SAVE_FILE = "playerparticles";
-    private final Map<UUID, PlayerParticleOptions> playerParticles = new HashMap<>();
-    private final ServerLevel level;
+    public static final Codec<PlayerParticleManager> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, PlayerParticleOptions.CODEC)
+            .xmap(PlayerParticleManager::new, manager -> manager.playerParticles);
+    public static final SavedDataType<PlayerParticleManager> TYPE = new SavedDataType<>("playerparticles", PlayerParticleManager::new, CODEC, null);
 
-    private PlayerParticleManager(ServerLevel level) {
-        this.level = level;
+    private final Map<UUID, PlayerParticleOptions> playerParticles = new HashMap<>();
+
+    private PlayerParticleManager(Map<UUID, PlayerParticleOptions> playerParticles) {
+        this.playerParticles.putAll(playerParticles);
     }
+
+    private PlayerParticleManager() {}
 
     public static PlayerParticleManager getInstance(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(managerFactory(server.overworld()), SAVE_FILE);
+        return server.overworld().getDataStorage().computeIfAbsent(TYPE);
     }
 
-    private static Factory<PlayerParticleManager> managerFactory(ServerLevel level) {
-        return new Factory<>(
-                () -> new PlayerParticleManager(level),
-                (tag, provider) -> read(level, tag), null);
-    }
+    public static CompoundTag dataFix(CompoundTag tag, int dataVersion) {
+        CompoundTag fixed = new CompoundTag();
 
-    private static PlayerParticleManager read(ServerLevel level, CompoundTag playerParticlesTag) {
-        PlayerParticleManager particleManager = new PlayerParticleManager(level);
-        ParticleRegistry particleRegistry = ParticleRegistry.getInstance();
+        CompoundTag data = tag.getCompound("data").orElseThrow();
+        CompoundTag fixedData = new CompoundTag();
+        Set<String> uuids = data.keySet();
 
-        Set<String> uuids = playerParticlesTag.getAllKeys();
         for (String uuid : uuids) {
-            CompoundTag particleTag = playerParticlesTag.getCompound(uuid);
-            Set<String> slots = particleTag.getAllKeys();
-            PlayerParticleOptions playerParticleOptions = new PlayerParticleOptions();
+            CompoundTag playerData = data.getCompoundOrEmpty(uuid);
+
+            CompoundTag fixedPlayerData = new CompoundTag();
+            CompoundTag particleData = new CompoundTag();
+
+            Set<String> slots = playerData.keySet();
             for (String slotKey : slots) {
-                CompoundTag slotTag = particleTag.getCompound(slotKey);
                 ParticleSlot slot;
                 try {
                     slot = ParticleSlot.valueOf(slotKey);
@@ -54,87 +56,42 @@ public class PlayerParticleManager extends SavedData {
                     continue;
                 }
 
-                PlayerParticle playerParticle = particleRegistry.fromId(slotTag.getString("particle"));
-                if (playerParticle == null) {
-                    continue;
-                }
-
-                ParticleDataType<?> particleDataType = playerParticle.getParticleDataType();
-                ParticleData<?> particleData = null;
-                if (particleDataType != null) {
-                    if (slotTag.contains("data")) {
-                        CompoundTag dataTag = slotTag.getCompound("data");
-                        try {
-                            particleData = particleDataType.read(level, dataTag);
-                        } catch (Exception exception) {
-                            continue;
-                        }
-                    } else {
-                        continue;
+                CompoundTag slotTag = playerData.getCompound(slotKey).orElseThrow();
+                CompoundTag fixedParticle = new CompoundTag();
+                fixedParticle.putString("particle", slotTag.getString("particle").orElseThrow());
+                if (slotTag.contains("data")) {
+                    CompoundTag dataTag = slotTag.getCompoundOrEmpty("data");
+                    for (String dataKey : dataTag.keySet()) {
+                        fixedParticle.put(dataKey, dataTag.get(dataKey));
                     }
                 }
-                playerParticleOptions.setParticle(slot, new ParticleWithData(playerParticle, particleData));
-            }
 
-            boolean enabled = true;
-            boolean allDisabled = false;
-            if (particleTag.contains("enabled", Tag.TAG_BYTE)) {
-                enabled = particleTag.getBoolean("enabled");
+                particleData.put(slot.getSerializedName(), fixedParticle);
             }
-            if (particleTag.contains("allDisabled", Tag.TAG_BYTE)) {
-                allDisabled = particleTag.getBoolean("allDisabled");
-            }
-            playerParticleOptions.enabled = enabled;
-            playerParticleOptions.allDisabled = allDisabled;
-            try {
-                particleManager.playerParticles.put(UUID.fromString(uuid), playerParticleOptions);
-            } catch (IllegalArgumentException ignored) {}
+            fixedPlayerData.put("particles", particleData);
+
+            fixedPlayerData.putBoolean("enabled", playerData.getBooleanOr("enabled", true));
+            fixedPlayerData.putBoolean("all_disabled", playerData.getBooleanOr("allDisabled", false));
+
+            fixedData.put(uuid, fixedPlayerData);
         }
 
-        return particleManager;
-    }
-
-    @Override
-    public @NotNull CompoundTag save(CompoundTag playerParticlesTag, HolderLookup.Provider provider) {
-        ParticleRegistry particleRegistry = ParticleRegistry.getInstance();
-
-        for (Entry<UUID, PlayerParticleOptions> playerParticleOptions : playerParticles.entrySet()) {
-            CompoundTag particleTag = new CompoundTag();
-            PlayerParticleOptions particleOptions = playerParticleOptions.getValue();
-            for (ParticleSlot slot : ParticleSlot.values()) {
-                ParticleWithData particleInfo = particleOptions.getParticle(slot);
-                if (particleInfo == null) {
-                    continue;
-                }
-                CompoundTag slotTag = new CompoundTag();
-                slotTag.putString("particle", particleRegistry.fromParticle(particleInfo.particle));
-                if (particleInfo.data != null) {
-                    CompoundTag dataTag = new CompoundTag();
-                    particleInfo.data.saveData(level, dataTag);
-                    slotTag.put("data", dataTag);
-                }
-                particleTag.put(slot.toString(), slotTag);
-            }
-            particleTag.putBoolean("enabled", particleOptions.enabled);
-            particleTag.putBoolean("allDisabled", particleOptions.allDisabled);
-            playerParticlesTag.put(playerParticleOptions.getKey().toString(), particleTag);
-        }
-
-        return playerParticlesTag;
+        fixed.put("data", fixedData);
+        return NbtUtils.addDataVersion(fixed, dataVersion);
     }
 
     public void tickPlayerParticles(ServerLevel level, ServerPlayer player) {
         for (ParticleSlot slot : ParticleSlot.values()) {
-            ParticleWithData particle = getPlayerParticle(player, slot);
+            ParticleWithData<?> particle = getPlayerParticle(player, slot);
             if (particle != null) {
                 try {
-                    particle.particle.tick(level, player, slot, particle.data);
+                    particle.tick(level, player, slot);
                 } catch (Exception ignored) {}
             }
         }
     }
 
-    private ParticleWithData getPlayerParticle(ServerPlayer player, ParticleSlot slot) {
+    private ParticleWithData<?> getPlayerParticle(ServerPlayer player, ParticleSlot slot) {
         if (playerParticles.containsKey(player.getUUID())) {
             PlayerParticleOptions particleOptions = playerParticles.get(player.getUUID());
             if (particleOptions.enabled) {
@@ -144,13 +101,12 @@ public class PlayerParticleManager extends SavedData {
         return null;
     }
 
-    public void setPlayerParticle(ServerPlayer player, ParticleSlot slot,
-            PlayerParticle playerParticle, ParticleData<?> data) {
+    public <T> void setPlayerParticle(ServerPlayer player, ParticleSlot slot, PlayerParticle<T> playerParticle, T data) {
         PlayerParticleOptions playerParticleOptions = getOrCreateParticleOptions(player);
         if (playerParticle == null) {
             playerParticleOptions.setParticle(slot, null);
         } else {
-            playerParticleOptions.setParticle(slot, new ParticleWithData(playerParticle, data));
+            playerParticleOptions.setParticle(slot, new ParticleWithData<>(playerParticle, data));
         }
         setDirty();
     }
@@ -181,18 +137,37 @@ public class PlayerParticleManager extends SavedData {
     }
 
     private static class PlayerParticleOptions {
-        private final Map<ParticleSlot, ParticleWithData> particles = new HashMap<>();
+        private static final Codec<Map<ParticleSlot, ParticleWithData<?>>> PARTICLES_CODEC = Codec.unboundedMap(ParticleSlot.CODEC, ParticleWithData.CODEC);
+        private static final Codec<PlayerParticleOptions> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(
+                        PARTICLES_CODEC.optionalFieldOf("particles", Map.of()).forGetter(options -> options.particles),
+                        Codec.BOOL.optionalFieldOf("enabled", true).forGetter(options -> options.enabled),
+                        Codec.BOOL.optionalFieldOf("all_disabled", false).forGetter(options -> options.allDisabled)
+                ).apply(instance, PlayerParticleOptions::new)
+        );
+
+        private final Map<ParticleSlot, ParticleWithData<?>> particles = new HashMap<>();
         private boolean enabled = true;
         private boolean allDisabled = false;
 
-        private ParticleWithData getParticle(ParticleSlot slot) {
+        private PlayerParticleOptions(Map<ParticleSlot, ParticleWithData<?>> particles, boolean enabled, boolean allDisabled) {
+            this.particles.putAll(particles);
+            this.enabled = enabled;
+            this.allDisabled = allDisabled;
+        }
+
+        private PlayerParticleOptions() {}
+
+        private ParticleWithData<?> getParticle(ParticleSlot slot) {
             return particles.get(slot);
         }
 
-        private void setParticle(ParticleSlot slot, ParticleWithData particle) {
-            particles.put(slot, particle);
+        private void setParticle(ParticleSlot slot, ParticleWithData<?> particle) {
+            if (particle == null) {
+                particles.remove(slot);
+            } else {
+                particles.put(slot, particle);
+            }
         }
     }
-
-    private record ParticleWithData(PlayerParticle particle, ParticleData<?> data) {}
 }

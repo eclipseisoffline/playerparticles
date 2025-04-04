@@ -1,20 +1,30 @@
 package xyz.eclipseisoffline.playerparticles.particles;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
+import xyz.eclipseisoffline.playerparticles.ParticleRegistry;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.PlayerParticleManager;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
-public interface PlayerParticle {
+public interface PlayerParticle<T> {
+    Codec<PlayerParticle<?>> CODEC = Codec.STRING.comapFlatMap(string -> {
+        PlayerParticle<?> particle = ParticleRegistry.getInstance().fromId(string);
+        if (particle == null) {
+            return DataResult.error(() -> "Unknown player particle " + string);
+        }
+        return DataResult.success(particle);
+    }, particle -> ParticleRegistry.getInstance().fromParticle(particle));
+
     Vec3 FLAT_BLOCK_OFFSET = new Vec3(0.125, 0.0, 0.125);
     Vec3 AROUND_LARGE_OFFSET = new Vec3(1, 1, 1);
 
-    void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, ParticleData<?> data);
+    void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, T data);
     boolean canWear(ParticleSlot slot);
 
     default void sendParticles(ServerLevel level, ServerPlayer source,
@@ -31,12 +41,10 @@ public interface PlayerParticle {
                 pos.x, pos.y, pos.z, count, scaledOffset.x, scaledOffset.y, scaledOffset.z, speed));
     }
 
-    default ParticleDataType<?> getParticleDataType() {
-        return null;
-    }
+    ParticleDataType<T> particleDataType();
 
     default boolean particleDataRequired() {
-        return getParticleDataType() != null;
+        return true;
     }
 
     default Vec3 defaultParticlePos(ServerPlayer player, ParticleSlot slot) {

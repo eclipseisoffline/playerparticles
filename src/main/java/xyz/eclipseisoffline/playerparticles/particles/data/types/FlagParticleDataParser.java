@@ -12,17 +12,8 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 
-public class FlagParticleData extends ColorParticleData {
-
-    public FlagParticleData(List<ColorData> colors) {
-        super(colors);
-    }
-
-    private FlagParticleData(Flag flag) {
-        super(flag.colors);
-    }
+public class FlagParticleDataParser extends ColorParticleDataParser {
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context,
@@ -34,11 +25,11 @@ public class FlagParticleData extends ColorParticleData {
     }
 
     @Override
-    public ParticleData<List<ColorData>> parseData(CommandContext<CommandSourceStack> context,
-            String input) throws CommandSyntaxException {
+    public List<ColorData> parseData(CommandContext<CommandSourceStack> context,
+                                     String input) throws CommandSyntaxException {
         try {
             Flag flag = Flag.valueOf(input.toUpperCase());
-            return new FlagParticleData(flag);
+            return flag.colors;
         } catch (IllegalArgumentException exception) {
             throw new SimpleCommandExceptionType(Component.literal("Unknown flag " + input)).create();
         }

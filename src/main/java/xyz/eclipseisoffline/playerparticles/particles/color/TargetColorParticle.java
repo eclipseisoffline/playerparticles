@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
-import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;
+import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser;
 
 public class TargetColorParticle extends ColorParticle {
     private static final int CIRCLE_COUNT = 15;
@@ -14,7 +14,7 @@ public class TargetColorParticle extends ColorParticle {
     private static final double INTERVAL = CIRCLE / CIRCLE_COUNT;
 
     @Override
-    protected ParticleOptions createColorParticle(ServerPlayer player, ParticleSlot slot, ColorParticleData.ColorData firstColor, ColorParticleData.ColorData secondColor) {
+    protected ParticleOptions createColorParticle(ServerPlayer player, ParticleSlot slot, ColorParticleDataParser.ColorData firstColor, ColorParticleDataParser.ColorData secondColor) {
         return new TrailParticleOption(Vec3.ZERO, firstColor.toInt(1.0F), 300);
     }
 

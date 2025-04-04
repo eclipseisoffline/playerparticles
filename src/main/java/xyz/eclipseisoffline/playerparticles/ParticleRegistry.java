@@ -9,7 +9,7 @@ import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 
 public class ParticleRegistry {
     private static final ParticleRegistry INSTANCE = new ParticleRegistry();
-    private final Map<String, PlayerParticle> particles = new HashMap<>();
+    private final Map<String, PlayerParticle<?>> particles = new HashMap<>();
     private final Map<ParticleSlot, List<String>> particlesForSlot = new HashMap<>();
 
     private ParticleRegistry() {
@@ -18,7 +18,7 @@ public class ParticleRegistry {
         }
     }
 
-    public void register(String particleId, PlayerParticle particle) {
+    public void register(String particleId, PlayerParticle<?> particle) {
         particles.put(particleId, particle);
         for (ParticleSlot particleSlot : ParticleSlot.values()) {
             if (particle.canWear(particleSlot)) {
@@ -27,8 +27,8 @@ public class ParticleRegistry {
         }
     }
 
-    public String fromParticle(PlayerParticle particle) {
-        for (Entry<String, PlayerParticle> particleEntry : particles.entrySet()) {
+    public String fromParticle(PlayerParticle<?> particle) {
+        for (Entry<String, PlayerParticle<?>> particleEntry : particles.entrySet()) {
             if (particleEntry.getValue().equals(particle)) {
                 return particleEntry.getKey();
             }
@@ -36,7 +36,7 @@ public class ParticleRegistry {
         return null;
     }
 
-    public PlayerParticle fromId(String id) {
+    public PlayerParticle<?> fromId(String id) {
         return particles.get(id);
     }
 

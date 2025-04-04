@@ -5,11 +5,12 @@ import java.util.Map;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Unit;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
+import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
-public class SimplePlayerParticle implements PlayerParticle {
+public class SimplePlayerParticle implements PlayerParticle<Unit> {
     private final SimpleParticleSettings settings;
 
     public SimplePlayerParticle(ParticleOptions particle) {
@@ -34,8 +35,7 @@ public class SimplePlayerParticle implements PlayerParticle {
     }
 
     @Override
-    public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
-            ParticleData<?> data) {
+    public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, Unit data) {
         if (settings.interval > 1) {
             if (level.getServer().getTickCount() % settings.interval != 0) {
                 return;
@@ -50,6 +50,11 @@ public class SimplePlayerParticle implements PlayerParticle {
     @Override
     public boolean canWear(ParticleSlot slot) {
         return settings.particleCounts.containsKey(slot);
+    }
+
+    @Override
+    public ParticleDataType<Unit> particleDataType() {
+        return ParticleDataType.EMPTY;
     }
 
     public static class Builder {

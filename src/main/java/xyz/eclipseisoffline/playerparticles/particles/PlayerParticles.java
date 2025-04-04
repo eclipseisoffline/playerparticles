@@ -9,7 +9,6 @@ import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagPotionParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.PotionParticle;
-import xyz.eclipseisoffline.playerparticles.particles.color.TargetColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.item.ItemParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.AmbientPlusParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SimplePlayerParticle;
@@ -113,8 +112,8 @@ public enum PlayerParticles {
     FLAG_POTION(new FlagPotionParticle()),
     ITEM(new ItemParticle());
 
-    private final PlayerParticle particle;
-    PlayerParticles(PlayerParticle particle) {
+    private final PlayerParticle<?> particle;
+    PlayerParticles(PlayerParticle<?> particle) {
         this.particle = particle;
     }
 

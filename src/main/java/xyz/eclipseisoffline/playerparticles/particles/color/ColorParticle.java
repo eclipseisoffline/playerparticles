@@ -7,18 +7,15 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
-import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData;
-import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData.ColorData;
+import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser.ColorData;
 
-public class ColorParticle implements PlayerParticle {
+public class ColorParticle implements PlayerParticle<List<ColorData>> {
     private static final int COLOR_TIME = 20;
 
     @Override
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
-            ParticleData<?> data) {
-        List<ColorData> colors = ((ColorParticleData) data).getData();
+            List<ColorData> colors) {
         int i = (int) ((level.getGameTime() / COLOR_TIME) % colors.size());
 
         int j = i + 1;
@@ -44,7 +41,7 @@ public class ColorParticle implements PlayerParticle {
     }
 
     @Override
-    public ParticleDataType<?> getParticleDataType() {
+    public ParticleDataType<List<ColorData>> particleDataType() {
         return ParticleDataType.COLOR;
     }
 }

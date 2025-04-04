@@ -9,23 +9,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.FloatTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ARGB;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
-import xyz.eclipseisoffline.playerparticles.particles.data.SimpleDataHolder;
-import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleData.ColorData;
+import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataParser;
+import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser.ColorData;
 
-public class ColorParticleData extends SimpleDataHolder<List<ColorData>> {
+public class ColorParticleDataParser implements ParticleDataParser<List<ColorData>> {
 
-    public ColorParticleData(List<ColorData> colors) {
-        super(colors);
-    }
+    public static final MapCodec<List<ColorData>> CODEC = ColorData.CODEC.listOf().fieldOf("colors");
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context,
@@ -34,8 +30,8 @@ public class ColorParticleData extends SimpleDataHolder<List<ColorData>> {
     }
 
     @Override
-    public ParticleData<List<ColorData>> parseData(CommandContext<CommandSourceStack> context,
-            String input) throws CommandSyntaxException {
+    public List<ColorData> parseData(CommandContext<CommandSourceStack> context,
+                                     String input) throws CommandSyntaxException {
         String[] codes = input.split(" ");
         List<ColorData> colors = new ArrayList<>();
 
@@ -53,41 +49,22 @@ public class ColorParticleData extends SimpleDataHolder<List<ColorData>> {
             }
         }
 
-        return new ColorParticleData(colors);
-    }
-
-    @Override
-    public List<ColorData> readData(ServerLevel level, CompoundTag tag) {
-        ListTag colorsTag = (ListTag) tag.get("colors");
-        if (colorsTag == null) {
-            return List.of();
-        }
-
-        List<ColorData> colors = new ArrayList<>();
-        for (int i = 0; i < colorsTag.size(); i++) {
-            ListTag colorTag = colorsTag.getList(i);
-            float red = colorTag.getFloat(0);
-            float green = colorTag.getFloat(1);
-            float blue = colorTag.getFloat(2);
-            colors.add(new ColorData(red, green, blue));
-        }
         return colors;
     }
 
-    @Override
-    public void saveData(ServerLevel level, CompoundTag tag) {
-        ListTag colors = new ListTag();
-        for (ColorData color : getData()) {
-            ListTag colorTag = new ListTag();
-            colorTag.add(FloatTag.valueOf(color.red));
-            colorTag.add(FloatTag.valueOf(color.green));
-            colorTag.add(FloatTag.valueOf(color.blue));
-            colors.add(colorTag);
-        }
-        tag.put("colors", colors);
-    }
-
     public record ColorData(float red, float green, float blue) {
+        public static final Codec<ColorData> CODEC = Codec.FLOAT.listOf(3, 3).xmap(ColorData::fromList, ColorData::toList);
+
+        public static ColorData fromList(List<Float> floats) {
+            if (floats.size() != 3) {
+                throw new IllegalArgumentException("Must be exactly 3 floats");
+            }
+            return new ColorData(floats.get(0), floats.get(1), floats.get(2));
+        }
+
+        public List<Float> toList() {
+            return List.of(red, green, blue);
+        }
 
         public static ColorData fromInt(int color) {
             int red = color >> 16;

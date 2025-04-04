@@ -17,8 +17,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Unit;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
-import xyz.eclipseisoffline.playerparticles.particles.data.ParticleData;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
 public class PlayerParticleCommand {
@@ -88,8 +88,8 @@ public class PlayerParticleCommand {
     private static void registerParticleSlotCommand(ParticleSlot slot,
             LiteralArgumentBuilder<CommandSourceStack> base) {
         base.then(
-                Commands.literal(slot.getDisplayName())
-                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getDisplayName(), 2))
+                Commands.literal(slot.getSerializedName())
+                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getSerializedName(), 2))
                         .then(Commands.argument("particle", StringArgumentType.word())
                                 .suggests(new PlayerParticleSuggestionProvider(slot))
                                 .then(Commands.argument("data", StringArgumentType.greedyString())
@@ -124,35 +124,42 @@ public class PlayerParticleCommand {
             PlayerParticleManager particleManager = PlayerParticleManager.getInstance(context.getSource().getServer());
             if (reset) {
                 particleManager.setPlayerParticle(player, slot, null, null);
-                context.getSource().sendSuccess(() -> Component.literal("Reset particles in slot " + slot.getDisplayName()), true);
+                context.getSource().sendSuccess(() -> Component.literal("Reset particles in slot " + slot.getSerializedName()), true);
                 return 0;
             }
 
             String particleId = StringArgumentType.getString(context, "particle");
-            PlayerParticle particle = getParticle(context);
+            PlayerParticle<?> particle = getParticle(context);
 
             if (particle == null) {
                 throw new SimpleCommandExceptionType(Component.literal("Unknown particle " + particleId)).create();
             } else if (!particle.canWear(slot)) {
-                throw new SimpleCommandExceptionType(Component.literal("Cannot wear particle " + particleId + " in slot " + slot.getDisplayName())).create();
+                throw new SimpleCommandExceptionType(Component.literal("Cannot wear particle " + particleId + " in slot " + slot.getSerializedName())).create();
             }
 
-            String particleData = getParticleData(context);
-            ParticleDataType<?> particleDataType = particle.getParticleDataType();
-            ParticleData<?> data = null;
+            applyPlayerParticle(context, particle, player, slot, particleManager);
+            context.getSource().sendSuccess(() -> Component.literal("Applied particle " + particleId + " to slot " + slot.getSerializedName()), true);
+            return 0;
+        }
 
-            if  (particleData != null && particleDataType != null) {
+        private static <T> void applyPlayerParticle(CommandContext<CommandSourceStack> context, PlayerParticle<T> particle,
+                                                    ServerPlayer player, ParticleSlot slot, PlayerParticleManager particleManager) throws CommandSyntaxException {
+            String particleData = getParticleData(context);
+            ParticleDataType<T> particleDataType = particle.particleDataType();
+            T data = null;
+
+            if (particleData != null) {
                 data = particleDataType.parseData(context, particleData);
-            } else if (particleData == null && particle.particleDataRequired()) {
+            } else if (particleDataType == ParticleDataType.EMPTY) {
+                data = (T) Unit.INSTANCE;
+            } else if (particle.particleDataRequired()) {
                 throw new SimpleCommandExceptionType(Component.literal("Particle expects data but none was given")).create();
             }
 
             particleManager.setPlayerParticle(player, slot, particle, data);
-            context.getSource().sendSuccess(() -> Component.literal("Applied particle " + particleId + " to slot " + slot.getDisplayName()), true);
-            return 0;
         }
 
-        private static PlayerParticle getParticle(CommandContext<CommandSourceStack> context) {
+        private static PlayerParticle<?> getParticle(CommandContext<CommandSourceStack> context) {
             String particleId = StringArgumentType.getString(context, "particle");
             return ParticleRegistry.getInstance().fromId(particleId);
         }
@@ -166,8 +173,7 @@ public class PlayerParticleCommand {
         }
     }
 
-    private record PlayerParticleSuggestionProvider(ParticleSlot slot) implements
-            SuggestionProvider<CommandSourceStack> {
+    private record PlayerParticleSuggestionProvider(ParticleSlot slot) implements SuggestionProvider<CommandSourceStack> {
 
         @Override
         public CompletableFuture<Suggestions> getSuggestions(
@@ -177,24 +183,19 @@ public class PlayerParticleCommand {
         }
     }
 
-    private static class PlayerParticleDataSuggestionProvider implements
-            SuggestionProvider<CommandSourceStack> {
+    private static class PlayerParticleDataSuggestionProvider implements SuggestionProvider<CommandSourceStack> {
 
         @Override
         public CompletableFuture<Suggestions> getSuggestions(
                 CommandContext<CommandSourceStack> context, SuggestionsBuilder builder)
                 throws CommandSyntaxException {
-            PlayerParticle particle = PlayerParticleApplyCommand.getParticle(context);
+            PlayerParticle<?> particle = PlayerParticleApplyCommand.getParticle(context);
 
             if (particle == null) {
                 return builder.buildFuture();
             }
 
-            if (particle.getParticleDataType() == null) {
-                throw new SimpleCommandExceptionType(Component.literal("Particle doesn't accept data")).create();
-            }
-
-            return particle.getParticleDataType().getSuggestions(context, builder);
+            return particle.particleDataType().getSuggestions(context, builder);
         }
     }
 }

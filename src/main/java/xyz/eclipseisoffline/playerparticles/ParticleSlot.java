@@ -1,21 +1,23 @@
 package xyz.eclipseisoffline.playerparticles;
 
-public enum ParticleSlot {
+import com.mojang.serialization.Codec;
+import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
+
+public enum ParticleSlot implements StringRepresentable {
     BELOW("below", 5, 1.0),
     ABOVE("above", 2, 1.0),
     AROUND("around", 3, 1.0);
 
-    private final String displayName;
+    public static final Codec<ParticleSlot> CODEC = StringRepresentable.fromEnum(ParticleSlot::values);
+
+    private final String name;
     private final int defaultCount;
     private final double defaultSpeed;
-    ParticleSlot(String displayName, int defaultCount, double defaultSpeed) {
-        this.displayName = displayName;
+    ParticleSlot(String name, int defaultCount, double defaultSpeed) {
+        this.name = name;
         this.defaultCount = defaultCount;
         this.defaultSpeed = defaultSpeed;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     public int getDefaultCount() {
@@ -24,5 +26,10 @@ public enum ParticleSlot {
 
     public double getDefaultSpeed() {
         return defaultSpeed;
+    }
+
+    @Override
+    public @NotNull String getSerializedName() {
+        return name;
     }
 }
