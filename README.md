@@ -114,11 +114,11 @@ These particles are available at the moment:
 | `wax_off`           | Displays wax off particles                                                                                                       | ❌            | ✔️            | ❌            |
 | `wax_on`            | Displays wax on particles                                                                                                        | ❌            | ✔️            | ❌            |
 | `firefly`           | Displays fire flies                                                                                                              | ❌            | ✔️            | ❌            |
-| `pale_oak_leaves`   | Displays pale oak leaves                                                                                                         | ❌            | ✔️            | ✔            |
+| `pale_oak_leaves`   | Displays pale oak leaves                                                                                                         | ❌            | ✔️            | ✔️            |
 | `sonic_boom`        | Displays sonic boom particles                                                                                                    | ❌            | ✔️            | ❌            |
 | `color`             | Displays coloured dust particles around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ✔️           | ✔️            | ✔️           |
 | `potion`            | Displays coloured potion particles around you. You can specify an ordered list of (hex) colours to display in the particle data. | ❌            | ✔️            | ❌️           |
-| `tinted_leaves`     | Displays coloured falling leaves around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ❌            | ❌️            | ✔            |
+| `tinted_leaves`     | Displays coloured falling leaves around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ❌            | ❌️            | ✔️            |
 | `flag`              | Displays a pride flag in dust particles around you. You can specify the flag to display in the particle data.                    | ✔️           | ✔️            | ️✔️          |
 | `flag_potion`       | Displays a pride flag in potion particles around you. You can specify the flag to display in the particle data.                  | ❌            | ✔️            | ️❌           |
 | `item`              | Displays an item particle around you. You can specify the item to display particles of in the particle data.                     | ❌            | ✔️            | ✔️           |
