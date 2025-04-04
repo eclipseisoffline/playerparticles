@@ -9,8 +9,10 @@ import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.FlagPotionParticle;
 import xyz.eclipseisoffline.playerparticles.particles.color.PotionParticle;
+import xyz.eclipseisoffline.playerparticles.particles.color.TintedLeavesParticle;
 import xyz.eclipseisoffline.playerparticles.particles.item.ItemParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.AmbientPlusParticle;
+import xyz.eclipseisoffline.playerparticles.particles.simple.PaleOakLeavesParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SimplePlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.simple.SonicBoomParticle;
 
@@ -105,6 +107,12 @@ public enum PlayerParticles {
             .build()),
     WAX_OFF(new AmbientPlusParticle(ParticleTypes.WAX_OFF, 0.25)),
     WAX_ON(new AmbientPlusParticle(ParticleTypes.WAX_ON, 0.25)),
+    FIREFLY(new SimplePlayerParticle.Builder(ParticleTypes.FIREFLY)
+            .withSlot(ParticleSlot.AROUND, 1, 1.0)
+            .withInterval(2)
+            .build()),
+    PALE_OAK_LEAVES(new PaleOakLeavesParticle()),
+    TINTED_LEAVES(new TintedLeavesParticle()),
     SONIC_BOOM(new SonicBoomParticle()),
     POTION(new PotionParticle()),
     COLOR(new ColorParticle()),

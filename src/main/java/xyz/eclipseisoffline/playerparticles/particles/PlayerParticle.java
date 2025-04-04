@@ -49,20 +49,11 @@ public interface PlayerParticle<T> {
 
     default Vec3 defaultParticlePos(ServerPlayer player, ParticleSlot slot) {
         double scale = player.getAttributeValue(Attributes.SCALE);
-        switch (slot) {
-            case ABOVE -> {
-                return player.position().add(0, 2.2 * scale, 0);
-            }
-            case BELOW -> {
-                return player.position().add(0, 0.05 * scale, 0);
-            }
-            case AROUND -> {
-                return player.position().add(0, scale, 0);
-            }
-            default -> {
-                return player.position();
-            }
-        }
+        return switch (slot) {
+            case ABOVE -> player.position().add(0, 2.2 * scale, 0);
+            case BELOW -> player.position().add(0, 0.05 * scale, 0);
+            case AROUND -> player.position().add(0, scale, 0);
+        };
     }
 
     default Vec3 defaultParticleOffset(ParticleSlot slot) {
