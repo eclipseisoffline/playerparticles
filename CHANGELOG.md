@@ -1,2 +1,1 @@
-- Update to 1.21.5.
-- Add `firefly`, `pale_oak_leaves`, and `tinted_leaves` player particles.
+- Removed a debug statement. Whoops!

@@ -21,7 +21,6 @@ public abstract class DimensionDataStorageMixin implements AutoCloseable {
         if (filename.equals(PlayerParticleManager.TYPE.id()) && dataVersion < 4325) { // 1.21.5
             try {
                 CompoundTag fixed = PlayerParticleManager.dataFix(tag, dataVersion);
-                System.out.println(fixed);
                 actualTag.set(fixed);
             } catch (Exception exception) {
                 PlayerParticlesInitializer.LOGGER.error("An error occurred while trying to datafix player particle data!", exception);
