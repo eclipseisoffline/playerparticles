@@ -37,7 +37,7 @@ public class PlayerParticlesInitializer implements ModInitializer {
                 if (player.isInvisible() || player.isSpectator()) {
                     continue;
                 }
-                particleManager.tickPlayerParticles(player.serverLevel(), player);
+                particleManager.tickPlayerParticles(player.level(), player);
             }
         });
 
