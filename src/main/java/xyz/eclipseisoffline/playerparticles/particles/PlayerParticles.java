@@ -3,6 +3,7 @@ package xyz.eclipseisoffline.playerparticles.particles;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SculkChargeParticleOptions;
 import net.minecraft.core.particles.ShriekParticleOption;
+import net.minecraft.core.particles.SimpleParticleType;
 import xyz.eclipseisoffline.playerparticles.ParticleRegistry;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.color.ColorParticle;
@@ -89,11 +90,9 @@ public enum PlayerParticles {
             .withSlot(ParticleSlot.BELOW, 1, 0.01)
             .withSlot(ParticleSlot.AROUND, 1, 0.1)
             .build()),
-    FLAME(new SimplePlayerParticle.Builder(ParticleTypes.FLAME)
-            .withSlot(ParticleSlot.AROUND, 1, 0.1)
-            .withSlot(ParticleSlot.ABOVE, 1, 0.01)
-            .withInterval(3)
-            .build()),
+    FLAME(flamePlayerParticle(ParticleTypes.FLAME)),
+    SOUL_FIRE_FLAME(flamePlayerParticle(ParticleTypes.SOUL_FIRE_FLAME)),
+    COPPER_FIRE_FLAME(flamePlayerParticle(ParticleTypes.COPPER_FIRE_FLAME)),
     LAVA(new SimplePlayerParticle.Builder(ParticleTypes.LAVA)
             .withSlot(ParticleSlot.AROUND, 1, 0.1)
             .withSlot(ParticleSlot.ABOVE, 1, 0.1)
@@ -129,5 +128,13 @@ public enum PlayerParticles {
         for (PlayerParticles normalParticle : values()) {
             registry.register(normalParticle.name().toLowerCase(), normalParticle.particle);
         }
+    }
+
+    private static SimplePlayerParticle flamePlayerParticle(SimpleParticleType type) {
+        return new SimplePlayerParticle.Builder(type)
+                .withSlot(ParticleSlot.AROUND, 1, 0.1)
+                .withSlot(ParticleSlot.ABOVE, 1, 0.01)
+                .withInterval(3)
+                .build();
     }
 }
