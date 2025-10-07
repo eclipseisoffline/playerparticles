@@ -1,2 +1,1 @@
-- Update to 1.21.9.
-- Added player particles `soul_fire_flame` and `copper_fire_flame`.
+- Update to 1.21.10.
