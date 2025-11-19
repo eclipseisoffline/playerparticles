@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.ParticleRegistry;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.PlayerParticleManager;
@@ -24,7 +25,7 @@ public interface PlayerParticle<T> {
     Vec3 FLAT_BLOCK_OFFSET = new Vec3(0.125, 0.0, 0.125);
     Vec3 AROUND_LARGE_OFFSET = new Vec3(1, 1, 1);
 
-    void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, T data);
+    void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, @Nullable T data);
     boolean canWear(ParticleSlot slot);
 
     default void sendParticles(ServerLevel level, ServerPlayer source,

@@ -2,7 +2,6 @@ package xyz.eclipseisoffline.playerparticles;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 
 public enum ParticleSlot implements StringRepresentable {
     BELOW("below", 5, 1.0),
@@ -29,7 +28,7 @@ public enum ParticleSlot implements StringRepresentable {
     }
 
     @Override
-    public @NotNull String getSerializedName() {
+    public String getSerializedName() {
         return name;
     }
 }

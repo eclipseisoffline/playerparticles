@@ -2,6 +2,7 @@ package xyz.eclipseisoffline.playerparticles;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 
 public class PlayerParticleManager extends SavedData {
@@ -91,7 +93,7 @@ public class PlayerParticleManager extends SavedData {
         }
     }
 
-    private ParticleWithData<?> getPlayerParticle(ServerPlayer player, ParticleSlot slot) {
+    private @Nullable ParticleWithData<?> getPlayerParticle(ServerPlayer player, ParticleSlot slot) {
         if (playerParticles.containsKey(player.getUUID())) {
             PlayerParticleOptions particleOptions = playerParticles.get(player.getUUID());
             if (particleOptions.enabled) {
@@ -101,12 +103,12 @@ public class PlayerParticleManager extends SavedData {
         return null;
     }
 
-    public <T> void setPlayerParticle(ServerPlayer player, ParticleSlot slot, PlayerParticle<T> playerParticle, T data) {
+    public <T> void setPlayerParticle(ServerPlayer player, ParticleSlot slot, @Nullable PlayerParticle<T> playerParticle, @Nullable T data) {
         PlayerParticleOptions playerParticleOptions = getOrCreateParticleOptions(player);
         if (playerParticle == null) {
             playerParticleOptions.setParticle(slot, null);
         } else {
-            playerParticleOptions.setParticle(slot, new ParticleWithData<>(playerParticle, data));
+            playerParticleOptions.setParticle(slot, new ParticleWithData<>(playerParticle, Objects.requireNonNull(data)));
         }
         setDirty();
     }
@@ -162,7 +164,7 @@ public class PlayerParticleManager extends SavedData {
             return particles.get(slot);
         }
 
-        private void setParticle(ParticleSlot slot, ParticleWithData<?> particle) {
+        private void setParticle(ParticleSlot slot, @Nullable ParticleWithData<?> particle) {
             if (particle == null) {
                 particles.remove(slot);
             } else {

@@ -1,6 +1,4 @@
+@NullMarked
 package xyz.eclipseisoffline.playerparticles.particles;
 
-public class PlayerParticleType {
-
-
-}
+import org.jspecify.annotations.NullMarked;

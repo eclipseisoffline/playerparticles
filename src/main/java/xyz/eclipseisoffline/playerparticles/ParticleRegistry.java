@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 
 public class ParticleRegistry {
@@ -33,10 +35,10 @@ public class ParticleRegistry {
                 return particleEntry.getKey();
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unregistered particle " + particle);
     }
 
-    public PlayerParticle<?> fromId(String id) {
+    public @Nullable PlayerParticle<?> fromId(String id) {
         return particles.get(id);
     }
 

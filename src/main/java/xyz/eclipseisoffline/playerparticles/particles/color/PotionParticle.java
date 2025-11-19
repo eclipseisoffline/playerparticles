@@ -1,11 +1,12 @@
 package xyz.eclipseisoffline.playerparticles.particles.color;
 
 import java.util.List;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser.ColorData;
 
@@ -13,8 +14,8 @@ public class PotionParticle extends ColorParticle {
 
     @Override
     public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot,
-            List<ColorData> colors) {
-        ColorData color ;
+                     @Nullable List<ColorData> colors) {
+        ColorData color;
         if (colors != null) {
             color = Util.getRandom(colors, player.getRandom());
         } else {

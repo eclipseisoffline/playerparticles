@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.Version;
 import net.minecraft.server.level.ServerPlayer;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticles;
@@ -15,7 +16,7 @@ import xyz.eclipseisoffline.playerparticles.particles.PlayerParticles;
 public class PlayerParticlesInitializer implements ModInitializer {
     public static final String MOD_ID = "playerparticles";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private PlayerParticleManager particleManager = null;
+    private @Nullable PlayerParticleManager particleManager = null;
 
     @Override
     public void onInitialize() {

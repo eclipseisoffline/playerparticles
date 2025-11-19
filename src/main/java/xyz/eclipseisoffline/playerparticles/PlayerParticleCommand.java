@@ -18,6 +18,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Unit;
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
@@ -159,12 +160,12 @@ public class PlayerParticleCommand {
             particleManager.setPlayerParticle(player, slot, particle, data);
         }
 
-        private static PlayerParticle<?> getParticle(CommandContext<CommandSourceStack> context) {
+        private static @Nullable PlayerParticle<?> getParticle(CommandContext<CommandSourceStack> context) {
             String particleId = StringArgumentType.getString(context, "particle");
             return ParticleRegistry.getInstance().fromId(particleId);
         }
 
-        private static String getParticleData(CommandContext<CommandSourceStack> context) {
+        private static @Nullable String getParticleData(CommandContext<CommandSourceStack> context) {
             try {
                 return StringArgumentType.getString(context, "data");
             } catch (IllegalArgumentException exception) {
