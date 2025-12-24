@@ -85,7 +85,7 @@ public class PlayerParticleManager extends SavedData {
     public void tickPlayerParticles(ServerLevel level, ServerPlayer player) {
         for (ParticleSlot slot : ParticleSlot.values()) {
             ParticleWithData<?> particle = getPlayerParticle(player, slot);
-            if (particle != null) {
+            if (particle != null && player.tickCount % getPlayerParticleInterval(player) == 0) {
                 try {
                     particle.tick(level, player, slot);
                 } catch (Exception ignored) {}
@@ -94,13 +94,19 @@ public class PlayerParticleManager extends SavedData {
     }
 
     private @Nullable ParticleWithData<?> getPlayerParticle(ServerPlayer player, ParticleSlot slot) {
-        if (playerParticles.containsKey(player.getUUID())) {
-            PlayerParticleOptions particleOptions = playerParticles.get(player.getUUID());
-            if (particleOptions.enabled) {
-                return particleOptions.getParticle(slot);
-            }
+        PlayerParticleOptions particleOptions = playerParticles.get(player.getUUID());
+        if (particleOptions != null && particleOptions.enabled) {
+            return particleOptions.getParticle(slot);
         }
         return null;
+    }
+
+    private int getPlayerParticleInterval(ServerPlayer player) {
+        PlayerParticleOptions particleOptions = playerParticles.get(player.getUUID());
+        if (particleOptions != null && particleOptions.enabled) {
+            return particleOptions.interval;
+        }
+        return 1;
     }
 
     public <T> void setPlayerParticle(ServerPlayer player, ParticleSlot slot, @Nullable PlayerParticle<T> playerParticle, @Nullable T data) {
@@ -129,6 +135,12 @@ public class PlayerParticleManager extends SavedData {
         setDirty();
     }
 
+    public void setInterval(ServerPlayer player, int interval) {
+        PlayerParticleOptions playerParticleOptions = getOrCreateParticleOptions(player);
+        playerParticleOptions.interval = interval;
+        setDirty();
+    }
+
     private PlayerParticleOptions getOrCreateParticleOptions(ServerPlayer player) {
         PlayerParticleOptions playerParticleOptions = playerParticles.get(player.getUUID());
         if (playerParticleOptions == null) {
@@ -144,18 +156,21 @@ public class PlayerParticleManager extends SavedData {
                 instance.group(
                         PARTICLES_CODEC.optionalFieldOf("particles", Map.of()).forGetter(options -> options.particles),
                         Codec.BOOL.optionalFieldOf("enabled", true).forGetter(options -> options.enabled),
-                        Codec.BOOL.optionalFieldOf("all_disabled", false).forGetter(options -> options.allDisabled)
+                        Codec.BOOL.optionalFieldOf("all_disabled", false).forGetter(options -> options.allDisabled),
+                        Codec.INT.optionalFieldOf("interval", 1).forGetter(options -> options.interval)
                 ).apply(instance, PlayerParticleOptions::new)
         );
 
         private final Map<ParticleSlot, ParticleWithData<?>> particles = new HashMap<>();
         private boolean enabled = true;
         private boolean allDisabled = false;
+        private int interval = 1;
 
-        private PlayerParticleOptions(Map<ParticleSlot, ParticleWithData<?>> particles, boolean enabled, boolean allDisabled) {
+        private PlayerParticleOptions(Map<ParticleSlot, ParticleWithData<?>> particles, boolean enabled, boolean allDisabled, int interval) {
             this.particles.putAll(particles);
             this.enabled = enabled;
             this.allDisabled = allDisabled;
+            this.interval = interval;
         }
 
         private PlayerParticleOptions() {}

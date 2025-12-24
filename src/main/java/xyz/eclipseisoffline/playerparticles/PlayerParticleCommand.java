@@ -2,6 +2,7 @@ package xyz.eclipseisoffline.playerparticles;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,8 +16,10 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.TimeArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.util.Unit;
 import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
@@ -28,7 +31,7 @@ public class PlayerParticleCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands
                 .literal(PlayerParticlesInitializer.MOD_ID)
-                .requires(source -> source.isPlayer() && Permissions.check(source, PERMISSION, 2));
+                .requires(source -> source.isPlayer() && Permissions.check(source, PERMISSION, PermissionLevel.GAMEMASTERS));
 
         for (ParticleSlot particleSlot : ParticleSlot.values()) {
             registerParticleSlotCommand(particleSlot, command);
@@ -81,6 +84,19 @@ public class PlayerParticleCommand {
                             context.getSource().sendSuccess(() -> Component.literal("Turned all player particles on"), true);
                             return 0;
                         })
+                )
+                .then(Commands.literal("interval")
+                        .then(Commands.argument("ticks", TimeArgument.time(1))
+                                .executes(context -> {
+
+                                    ServerPlayer player = context.getSource().getPlayerOrException();
+                                    PlayerParticleManager particleManager = PlayerParticleManager.getInstance(context.getSource().getServer());
+                                    int interval = IntegerArgumentType.getInteger(context, "ticks");
+                                    particleManager.setInterval(player, interval);
+                                    context.getSource().sendSuccess(() -> Component.literal("Set player particle interval to " + interval), true);
+                                    return 0;
+                                })
+                        )
                 );
 
         dispatcher.register(command);
@@ -90,7 +106,7 @@ public class PlayerParticleCommand {
             LiteralArgumentBuilder<CommandSourceStack> base) {
         base.then(
                 Commands.literal(slot.getSerializedName())
-                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getSerializedName(), 2))
+                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getSerializedName(), PermissionLevel.GAMEMASTERS))
                         .then(Commands.argument("particle", StringArgumentType.word())
                                 .suggests(new PlayerParticleSuggestionProvider(slot))
                                 .then(Commands.argument("data", StringArgumentType.greedyString())

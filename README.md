@@ -59,6 +59,8 @@ It adds a simple command, `/playerparticles`, which can be used to configure you
   - `<particle data>` is only necessary for a some particles.
 - `/playerparticles disable-all` - disables rendering all (yours and others) player particles for you. Useful when player particles are laggy for you.
 - `/playerparticles enable-all` - enables rendering all (yours and others) player particles for you.
+- `/playerparticles interval <interval>` - configures the rate at which player particles appear. Use higher values to slow down the rate.
+  - By default, the interval is specified in ticks, append `s` to specify in seconds, e.g. `5s` for 5 seconds.
 
 At the moment, 3 particle slots are available:
 

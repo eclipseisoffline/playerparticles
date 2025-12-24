@@ -1,1 +1,3 @@
-- Update to 1.21.11.
+- Added `/playerparticles interval <interval>`, which can be used to configure the rate at which your player particles appear.
+  - Use higher values to slow down the rate.
+  - By default, the interval is specified in ticks, append `s` to specify in seconds, e.g. `5s` for 5 seconds.
