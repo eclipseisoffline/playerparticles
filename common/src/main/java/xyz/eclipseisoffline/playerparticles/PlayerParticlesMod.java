@@ -11,7 +11,6 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.eclipseisoffline.filefixutils.api.FileFixHelpers;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticles;
 
 public abstract class PlayerParticlesMod {
@@ -20,10 +19,6 @@ public abstract class PlayerParticlesMod {
 
     private boolean initialized = false;
     private @Nullable PlayerParticleManager particleManager = null;
-
-    public void preLoad() {
-        FileFixHelpers.registerGlobalDataMoveFileFix(PlayerParticleManager.LEGACY_ID, PlayerParticleManager.ID);
-    }
 
     public void initialize() {
         if (initialized) {

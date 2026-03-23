@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "playerparticles",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "Player Particles",
-  "description": "Player Particles is a simple mod that allows you to display cool particles around yourself",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "authors": [
     {
       "name": "eclipseisoffline",
@@ -13,26 +13,28 @@
     }
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/player-particles",
-    "issues": "https://github.com/eclipseisoffline/playerparticles/issues",
-    "sources": "https://github.com/eclipseisoffline/playerparticles"
+    "homepage": "https://modrinth.com/mod/${modrinth_id}",
+    "issues": "https://github.com/eclipseisoffline/${github_repository}/issues",
+    "sources": "https://github.com/eclipseisoffline/${github_repository}"
   },
   "license": "LGPL-3.0-only",
   "icon": "assets/playerparticles/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [],
+    "preLaunch": [
+      "xyz.eclipseisoffline.playerparticles.fabric.PlayerParticlesFabricPreLaunch"
+    ],
     "main": [
-      "xyz.eclipseisoffline.playerparticles.PlayerParticlesMod"
+      "xyz.eclipseisoffline.playerparticles.fabric.PlayerParticlesFabric"
     ]
   },
   "mixins": [
     "playerparticles.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
-    "fabric-api": "*",
-    "minecraft": "${supported_versions}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_api_version}",
+    "minecraft": "${minecraft_version}",
     "commonpermissionsapi": "*",
     "filefixutils": "*"
   },
