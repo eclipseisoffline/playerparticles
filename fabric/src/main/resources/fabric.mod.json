@@ -23,7 +23,7 @@
   "entrypoints": {
     "client": [],
     "main": [
-      "xyz.eclipseisoffline.playerparticles.PlayerParticlesInitializer"
+      "xyz.eclipseisoffline.playerparticles.PlayerParticlesMod"
     ]
   },
   "mixins": [

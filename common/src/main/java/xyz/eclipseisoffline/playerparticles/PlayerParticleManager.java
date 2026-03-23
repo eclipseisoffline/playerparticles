@@ -11,6 +11,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +23,9 @@ import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 public class PlayerParticleManager extends SavedData {
     public static final Codec<PlayerParticleManager> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, PlayerParticleOptions.CODEC)
             .xmap(PlayerParticleManager::new, manager -> manager.playerParticles);
-    public static final SavedDataType<PlayerParticleManager> TYPE = new SavedDataType<>("playerparticles", PlayerParticleManager::new, CODEC, null);
+    public static final String LEGACY_ID = PlayerParticlesMod.MOD_ID;
+    public static final Identifier ID = PlayerParticlesMod.getModdedIdentifier("data");
+    public static final SavedDataType<PlayerParticleManager> TYPE = new SavedDataType<>(ID, PlayerParticleManager::new, CODEC, null);
 
     private final Map<UUID, PlayerParticleOptions> playerParticles = new HashMap<>();
 

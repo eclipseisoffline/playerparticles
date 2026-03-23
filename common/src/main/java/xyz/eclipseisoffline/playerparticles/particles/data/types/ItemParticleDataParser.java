@@ -12,13 +12,12 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.arguments.item.ItemParser;
-import net.minecraft.commands.arguments.item.ItemParser.ItemResult;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataParser;
 
-public class ItemParticleDataParser implements ParticleDataParser<ItemStack> {
+public class ItemParticleDataParser implements ParticleDataParser<ItemStackTemplate> {
 
-    public static final MapCodec<ItemStack> CODEC = ItemStack.OPTIONAL_CODEC.fieldOf("item");
+    public static final MapCodec<ItemStackTemplate> CODEC = ItemStackTemplate.CODEC.fieldOf("item");
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context,
@@ -28,12 +27,11 @@ public class ItemParticleDataParser implements ParticleDataParser<ItemStack> {
     }
 
     @Override
-    public ItemStack parseData(CommandContext<CommandSourceStack> context, String input)
+    public ItemStackTemplate parseData(CommandContext<CommandSourceStack> context, String input)
             throws CommandSyntaxException {
         ItemParser itemParser = new ItemParser(context.getSource().getServer().registryAccess());
-        ItemResult resultParsed = itemParser.parse(new StringReader(input));
-        ItemInput parsedInput = new ItemInput(resultParsed.item(), resultParsed.components());
+        ItemInput parsedInput = itemParser.parse(new StringReader(input));
 
-        return parsedInput.createItemStack(1, false);
+        return ItemStackTemplate.fromNonEmptyStack(parsedInput.createItemStack(1));
     }
 }

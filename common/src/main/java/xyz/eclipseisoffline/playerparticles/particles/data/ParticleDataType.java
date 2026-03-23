@@ -12,6 +12,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.ColorParticleDataParser.ColorData;
 import xyz.eclipseisoffline.playerparticles.particles.data.types.FlagParticleDataParser;
@@ -21,7 +22,7 @@ public class ParticleDataType<T> implements SuggestionProvider<CommandSourceStac
     public static final ParticleDataType<Unit> EMPTY = new ParticleDataType<>(new UnitParser(), MapCodec.unit(Unit.INSTANCE));
     public static final ParticleDataType<List<ColorData>> COLOR = new ParticleDataType<>(new ColorParticleDataParser(), ColorParticleDataParser.CODEC);
     public static final ParticleDataType<List<ColorData>> FLAG = new ParticleDataType<>(new FlagParticleDataParser(), ColorParticleDataParser.CODEC);
-    public static final ParticleDataType<ItemStack> ITEM = new ParticleDataType<>(new ItemParticleDataParser(), ItemParticleDataParser.CODEC);
+    public static final ParticleDataType<ItemStackTemplate> ITEM = new ParticleDataType<>(new ItemParticleDataParser(), ItemParticleDataParser.CODEC);
 
     private final ParticleDataParser<T> parser;
     private final MapCodec<T> codec;

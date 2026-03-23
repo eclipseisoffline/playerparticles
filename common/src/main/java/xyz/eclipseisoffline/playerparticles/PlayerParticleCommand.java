@@ -26,11 +26,11 @@ import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
 public class PlayerParticleCommand {
-    private static final String PERMISSION = PlayerParticlesInitializer.MOD_ID + ".command";
+    private static final String PERMISSION = PlayerParticlesMod.MOD_ID + ".command";
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands
-                .literal(PlayerParticlesInitializer.MOD_ID)
+                .literal(PlayerParticlesMod.MOD_ID)
                 .requires(source -> source.isPlayer() && Permissions.check(source, PERMISSION, PermissionLevel.GAMEMASTERS));
 
         for (ParticleSlot particleSlot : ParticleSlot.values()) {
@@ -106,7 +106,7 @@ public class PlayerParticleCommand {
             LiteralArgumentBuilder<CommandSourceStack> base) {
         base.then(
                 Commands.literal(slot.getSerializedName())
-                        .requires(Permissions.require(PlayerParticlesInitializer.MOD_ID + "." + slot.getSerializedName(), PermissionLevel.GAMEMASTERS))
+                        .requires(Permissions.require(PlayerParticlesMod.MOD_ID + "." + slot.getSerializedName(), PermissionLevel.GAMEMASTERS))
                         .then(Commands.argument("particle", StringArgumentType.word())
                                 .suggests(new PlayerParticleSuggestionProvider(slot))
                                 .then(Commands.argument("data", StringArgumentType.greedyString())
