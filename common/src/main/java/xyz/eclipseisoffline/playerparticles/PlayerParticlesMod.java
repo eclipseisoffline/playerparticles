@@ -27,6 +27,7 @@ public abstract class PlayerParticlesMod {
         initialized = true;
         LOGGER.info("{} version {} initialising", MOD_ID, getVersion());
 
+        PlayerParticlePermissions.bootstrap();
         registerCommands(PlayerParticleCommand::register);
 
         registerServerStartedHandler(server -> particleManager = PlayerParticleManager.getInstance(server));

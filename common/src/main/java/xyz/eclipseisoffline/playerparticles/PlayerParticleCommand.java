@@ -12,7 +12,6 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import java.util.concurrent.CompletableFuture;
-import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -22,16 +21,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.util.Unit;
 import org.jspecify.annotations.Nullable;
+import xyz.eclipseisoffline.commonpermissionsapi.api.CommonPermissions;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
 
 public class PlayerParticleCommand {
-    private static final String PERMISSION = PlayerParticlesMod.MOD_ID + ".command";
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands
                 .literal(PlayerParticlesMod.MOD_ID)
-                .requires(source -> source.isPlayer() && Permissions.check(source, PERMISSION, PermissionLevel.GAMEMASTERS));
+                .requires(source -> source.isPlayer() && CommonPermissions.check(source, PlayerParticlePermissions.ROOT_NODE, PermissionLevel.GAMEMASTERS));
 
         for (ParticleSlot particleSlot : ParticleSlot.values()) {
             registerParticleSlotCommand(particleSlot, command);
@@ -103,10 +102,10 @@ public class PlayerParticleCommand {
     }
 
     private static void registerParticleSlotCommand(ParticleSlot slot,
-            LiteralArgumentBuilder<CommandSourceStack> base) {
+                                                    LiteralArgumentBuilder<CommandSourceStack> base) {
         base.then(
                 Commands.literal(slot.getSerializedName())
-                        .requires(Permissions.require(PlayerParticlesMod.MOD_ID + "." + slot.getSerializedName(), PermissionLevel.GAMEMASTERS))
+                        .requires(CommonPermissions.require(slot.getPermissionNode(), PermissionLevel.GAMEMASTERS))
                         .then(Commands.argument("particle", StringArgumentType.word())
                                 .suggests(new PlayerParticleSuggestionProvider(slot))
                                 .then(Commands.argument("data", StringArgumentType.greedyString())

@@ -33,7 +33,8 @@
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
     "minecraft": "${supported_versions}",
-    "fabric-permissions-api-v0": "*"
+    "commonpermissionsapi": "*",
+    "filefixutils": "*"
   },
   "custom": {
     "modmenu": {

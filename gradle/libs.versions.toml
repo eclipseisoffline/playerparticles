@@ -8,10 +8,16 @@ fabric-api = "0.144.0+26.1"
 
 neoforge = "26.1.0.0-alpha.15+pre-3"
 
+commonpermissionsapi = "0.0.1-26.1"
+filefixutils = "0.1.0-26.1"
+
 [libraries]
 minecraft = {group = "com.mojang", name = "minecraft", version.ref = "minecraft"}
 
 fabric-api = {group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api"}
+
+commonpermissionsapi = {group = "xyz.eclipseisoffline", name = "commonpermissionsapi", version.ref = "commonpermissionsapi"}
+filefixutils = {group = "xyz.eclipseisoffline", name = "filefixutils", version.ref = "filefixutils"}
 
 [plugins]
 multimod = {id = "xyz.eclipseisoffline.multimod", version.ref = "multimod"}
