@@ -21,8 +21,8 @@
   "icon": "assets/playerparticles/icon.png",
   "environment": "*",
   "entrypoints": {
-    "preLaunch": [
-      "xyz.eclipseisoffline.playerparticles.fabric.PlayerParticlesFabricPreLaunch"
+    "filefix": [
+      "xyz.eclipseisoffline.playerparticles.PlayerParticlesFileFixes"
     ],
     "main": [
       "xyz.eclipseisoffline.playerparticles.fabric.PlayerParticlesFabric"

@@ -23,7 +23,6 @@ import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 public class PlayerParticleManager extends SavedData {
     public static final Codec<PlayerParticleManager> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, PlayerParticleOptions.CODEC)
             .xmap(PlayerParticleManager::new, manager -> manager.playerParticles);
-    public static final String LEGACY_ID = PlayerParticlesMod.MOD_ID;
     public static final Identifier ID = PlayerParticlesMod.getModdedIdentifier("data");
     public static final SavedDataType<PlayerParticleManager> TYPE = new SavedDataType<>(ID, PlayerParticleManager::new, CODEC, null);
 
@@ -36,7 +35,7 @@ public class PlayerParticleManager extends SavedData {
     private PlayerParticleManager() {}
 
     public static PlayerParticleManager getInstance(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(TYPE);
+        return server.getDataStorage().computeIfAbsent(TYPE);
     }
 
     public static CompoundTag dataFix(CompoundTag tag, int dataVersion) {
