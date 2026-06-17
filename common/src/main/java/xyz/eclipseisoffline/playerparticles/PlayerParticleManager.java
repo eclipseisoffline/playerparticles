@@ -87,7 +87,7 @@ public class PlayerParticleManager extends SavedData {
     public void tickPlayerParticles(ServerLevel level, ServerPlayer player) {
         for (ParticleSlot slot : ParticleSlot.values()) {
             ParticleWithData<?> particle = getPlayerParticle(player, slot);
-            if (particle != null && player.tickCount % getPlayerParticleInterval(player) == 0) {
+            if (particle != null && player.tickCount % (particle.particle().interval() * getPlayerParticleInterval(player)) == 0) {
                 try {
                     particle.tick(level, player, slot);
                 } catch (Exception ignored) {}

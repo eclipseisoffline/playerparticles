@@ -64,4 +64,8 @@ public interface PlayerParticle<T> {
             return FLAT_BLOCK_OFFSET;
         }
     }
+
+    default int interval() {
+        return 1;
+    }
 }

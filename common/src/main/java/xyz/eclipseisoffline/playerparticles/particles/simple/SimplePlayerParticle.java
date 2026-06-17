@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Unit;
+import org.jspecify.annotations.Nullable;
 import xyz.eclipseisoffline.playerparticles.ParticleSlot;
 import xyz.eclipseisoffline.playerparticles.particles.PlayerParticle;
 import xyz.eclipseisoffline.playerparticles.particles.data.ParticleDataType;
@@ -35,13 +36,7 @@ public class SimplePlayerParticle implements PlayerParticle<Unit> {
     }
 
     @Override
-    public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, Unit data) {
-        if (settings.interval > 1) {
-            if (level.getServer().getTickCount() % settings.interval != 0) {
-                return;
-            }
-        }
-
+    public void tick(ServerLevel level, ServerPlayer player, ParticleSlot slot, @Nullable Unit data) {
         sendParticles(level, player, settings.particleOptions,
                 defaultParticlePos(player, slot), defaultParticleOffset(slot),
                 settings.getCount(slot), settings.getSpeed(slot));
@@ -55,6 +50,11 @@ public class SimplePlayerParticle implements PlayerParticle<Unit> {
     @Override
     public ParticleDataType<Unit> particleDataType() {
         return ParticleDataType.EMPTY;
+    }
+
+    @Override
+    public int interval() {
+        return settings.interval;
     }
 
     public static class Builder {
