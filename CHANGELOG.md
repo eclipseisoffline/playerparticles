@@ -1,1 +1,2 @@
 - Update to 26.2.
+- Added `pause_mob_growth`, `reset_mob_growth`, `sulfur_cube_goo`, `noxious_gas`, `geyser_poof`, and, `geyser_plume` player particles.

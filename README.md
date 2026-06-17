@@ -86,55 +86,61 @@ These particles are available at the moment:
 
 | Particle name       | Particle description                                                                                                             | `above` slot | `around` slot | `below` slot |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------|--------------|---------------|--------------|
-| `note`              | Displays jukebox/note particles                                                                                                  | ✔️           | ✔️            | ❌            |
-| `cherry`            | Displays cherry blossom leaves                                                                                                   | ❌            | ❌             | ✔️           |
-| `soul`              | Displays soul sand soul particles                                                                                                | ❌            | ✔️            | ✔️           |
-| `sculk_soul`        | Displays sculk soul particles                                                                                                    | ❌            | ✔️            | ✔️           |
-| `end`               | Displays portal particles                                                                                                        | ❌            | ✔️            | ❌            |
-| `nectar`            | Displays nectar particles                                                                                                        | ❌            | ✔️            | ✔️           |
+| `note`              | Displays jukebox/note particles                                                                                                  | ✔️           | ✔️            | ❌️           |
+| `cherry`            | Displays cherry blossom leaves                                                                                                   | ❌️           | ❌️            | ✔️           |
+| `soul`              | Displays soul sand soul particles                                                                                                | ❌️           | ✔️            | ✔️           |
+| `sculk_soul`        | Displays sculk soul particles                                                                                                    | ❌️           | ✔️            | ✔️           |
+| `end`               | Displays portal particles                                                                                                        | ❌️           | ✔️            | ❌️           |
+| `nectar`            | Displays nectar particles                                                                                                        | ❌️           | ✔️            | ✔️           |
 | `cloud`             | Displays a white cloud particle                                                                                                  | ✔️           | ✔️            | ✔️           |
 | `end_rod`           | Displays end rod particles                                                                                                       | ✔️           | ✔️            | ✔️           |
-| `composter`         | Displays the green bonemeal/composter particles                                                                                  | ❌            | ✔️            | ❌            |
-| `glow`              | Displays glow squid particles                                                                                                    | ❌            | ✔️            | ❌            |
-| `electric_spark`    | Displays the electric spark from lightning rods                                                                                  | ❌            | ✔️            | ❌            |
-| `heart`             | Displays heart particles                                                                                                         | ✔️           | ✔️            | ❌            |
-| `dolphin`           | Displays the dolphin trail particle                                                                                              | ❌            | ✔️            | ✔️           |
-| `spore_blossom`     | Displays the spore blossom particles                                                                                             | ❌            | ✔️            | ❌            |
-| `crimson`           | Displays the crimson forest ambient particles                                                                                    | ❌            | ✔️            | ❌            |
-| `warped`            | Displays the warped forest ambient particles                                                                                     | ❌            | ✔️            | ❌            |
-| `ash`               | Displays the soul sand valley ambient particles                                                                                  | ❌            | ✔️            | ❌            |
-| `enchant`           | Displays the enchanting table glyph particles                                                                                    | ❌            | ✔️            | ❌            |
-| `infested`          | Displays the particles produced by the infested effect                                                                           | ✔️           | ✔️            | ❌            |
-| `small_gust`        | Displays the particles produced by the wind charged effect                                                                       | ✔️           | ✔️            | ❌            |
-| `red_omen`          | Displays the raid omen particles                                                                                                 | ❌            | ✔️            | ❌            |
-| `blue_omen`         | Displays the trial omen particles                                                                                                | ❌            | ✔️            | ❌            |
-| `ominous_spawning`  | Displays the ominous spawner particles                                                                                           | ❌            | ✔️            | ❌            |
-| `red_bar`           | Displays the trial spawner detection particles                                                                                   | ✔️           | ✔️            | ❌            |
-| `blue_bar`          | Displays the ominous spawner detection particles                                                                                 | ✔️           | ✔️            | ❌            |
-| `dripping_honey`    | Displays dripping honey particles                                                                                                | ❌            | ❌             | ✔️           |
-| `dripping_lava`     | Displays dripping lava particles                                                                                                 | ❌            | ❌             | ✔️           |
-| `dripping_obsidian` | Displays dripping crying obsidian particles                                                                                      | ❌            | ❌             | ✔️           |
-| `dripping_water`    | Displays dripping water particles                                                                                                | ❌            | ❌             | ✔️           |
-| `firework`          | Displays firework launch particles                                                                                               | ❌            | ✔️            | ✔️           |
-| `flame`             | Displays torch flame particles                                                                                                   | ✔️           | ✔️            | ❌            |
-| `soul_fire_flame`   | Displays soul torch flame particles                                                                                              | ✔️           | ✔️            | ❌            |
-| `copper_fire_flame` | Displays copper torch flame particles                                                                                            | ✔️           | ✔️            | ❌            |
-| `lava`              | Displays "lava pop" particles                                                                                                    | ✔️           | ✔️            | ❌            |
-| `scrape`            | Displays the copper scrape particles                                                                                             | ❌            | ✔️            | ❌            |
-| `sculk_charge`      | Displays sculk charge particles                                                                                                  | ❌            | ❌             | ✔️           |
-| `totem`             | Displays totem of undying particles                                                                                              | ❌            | ❌             | ✔️           |
-| `shriek`            | Displays sculk shrieker activation particles                                                                                     | ✔️           | ❌             | ❌            |
-| `wax_off`           | Displays wax off particles                                                                                                       | ❌            | ✔️            | ❌            |
-| `wax_on`            | Displays wax on particles                                                                                                        | ❌            | ✔️            | ❌            |
-| `firefly`           | Displays fire flies                                                                                                              | ❌            | ✔️            | ❌            |
-| `pale_oak_leaves`   | Displays pale oak leaves                                                                                                         | ❌            | ✔️            | ✔️           |
-| `sonic_boom`        | Displays sonic boom particles                                                                                                    | ❌            | ✔️            | ❌            |
+| `composter`         | Displays the green bonemeal/composter particles                                                                                  | ❌️           | ✔️            | ❌️           |
+| `glow`              | Displays glow squid particles                                                                                                    | ❌️           | ✔️            | ❌️           |
+| `electric_spark`    | Displays the electric spark from lightning rods                                                                                  | ❌️           | ✔️            | ❌️           |
+| `heart`             | Displays heart particles                                                                                                         | ✔️           | ✔️            | ❌️           |
+| `dolphin`           | Displays the dolphin trail particle                                                                                              | ❌️           | ✔️            | ✔️           |
+| `spore_blossom`     | Displays the spore blossom particles                                                                                             | ❌️           | ✔️            | ❌️           |
+| `crimson`           | Displays the crimson forest ambient particles                                                                                    | ❌️           | ✔️            | ❌️           |
+| `warped`            | Displays the warped forest ambient particles                                                                                     | ❌️           | ✔️            | ❌️           |
+| `ash`               | Displays the soul sand valley ambient particles                                                                                  | ❌️           | ✔️            | ❌️           |
+| `enchant`           | Displays the enchanting table glyph particles                                                                                    | ❌️           | ✔️            | ❌️           |
+| `infested`          | Displays the particles produced by the infested effect                                                                           | ✔️           | ✔️            | ❌️           |
+| `small_gust`        | Displays the particles produced by the wind charged effect                                                                       | ✔️           | ✔️            | ❌️           |
+| `red_omen`          | Displays the raid omen particles                                                                                                 | ❌️           | ✔️            | ❌️           |
+| `blue_omen`         | Displays the trial omen particles                                                                                                | ❌️           | ✔️            | ❌️           |
+| `ominous_spawning`  | Displays the ominous spawner particles                                                                                           | ❌️           | ✔️            | ❌️           |
+| `red_bar`           | Displays the trial spawner detection particles                                                                                   | ✔️           | ✔️            | ❌️           |
+| `blue_bar`          | Displays the ominous spawner detection particles                                                                                 | ✔️           | ✔️            | ❌️           |
+| `dripping_honey`    | Displays dripping honey particles                                                                                                | ❌️           | ❌️            | ✔️           |
+| `dripping_lava`     | Displays dripping lava particles                                                                                                 | ❌️           | ❌️            | ✔️           |
+| `dripping_obsidian` | Displays dripping crying obsidian particles                                                                                      | ❌️           | ❌️            | ✔️           |
+| `dripping_water`    | Displays dripping water particles                                                                                                | ❌️           | ❌️            | ✔️           |
+| `firework`          | Displays firework launch particles                                                                                               | ❌️           | ✔️            | ✔️           |
+| `flame`             | Displays torch flame particles                                                                                                   | ✔️           | ✔️            | ❌️           |
+| `soul_fire_flame`   | Displays soul torch flame particles                                                                                              | ✔️           | ✔️            | ❌️           |
+| `copper_fire_flame` | Displays copper torch flame particles                                                                                            | ✔️           | ✔️            | ❌️           |
+| `lava`              | Displays "lava pop" particles                                                                                                    | ✔️           | ✔️            | ❌️           |
+| `scrape`            | Displays the copper scrape particles                                                                                             | ❌️           | ✔️            | ❌️           |
+| `sculk_charge`      | Displays sculk charge particles                                                                                                  | ❌️           | ❌️            | ✔️           |
+| `totem`             | Displays totem of undying particles                                                                                              | ❌️           | ❌️            | ✔️           |
+| `shriek`            | Displays sculk shrieker activation particles                                                                                     | ✔️           | ❌️            | ❌️           |
+| `wax_off`           | Displays wax off particles                                                                                                       | ❌️           | ✔️            | ❌️           |
+| `wax_on`            | Displays wax on particles                                                                                                        | ❌️           | ✔️            | ❌️           |
+| `firefly`           | Displays fire flies                                                                                                              | ❌️           | ✔️            | ❌️           |
+| `pause_mob_growth`  | Displays green particles (the ones that display when you age lock a baby mob)                                                    | ❌️           | ✔️            | ❌️           |
+| `reset_mob_growth`  | Displays green particles (the ones that display when you age unlock a baby mob)                                                  | ❌️           | ✔️            | ❌️           |
+| `sulfur_cube_goo`   | Displays sulfur cube goo particles                                                                                               | ❌️           | ❌️            | ✔️           |
+| `noxious_gas`       | Displays noxious gas (yellow clouds)                                                                                             | ❌️           | ✔️            | ✔️           |
+| `geyser_poof`       | Displays geyser poofs (white clouds)                                                                                             | ❌️           | ✔️            | ✔️           |
+| `geyser_plume`      | Displays geysers                                                                                                                 | ✔️           | ❌️            | ❌️           |
+| `pale_oak_leaves`   | Displays pale oak leaves                                                                                                         | ❌️           | ✔️            | ✔️           |
+| `sonic_boom`        | Displays sonic boom particles                                                                                                    | ❌️           | ✔️            | ❌️           |
 | `color`             | Displays coloured dust particles around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ✔️           | ✔️            | ✔️           |
-| `potion`            | Displays coloured potion particles around you. You can specify an ordered list of (hex) colours to display in the particle data. | ❌            | ✔️            | ❌️           |
-| `tinted_leaves`     | Displays coloured falling leaves around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ❌            | ❌️            | ✔️           |
+| `potion`            | Displays coloured potion particles around you. You can specify an ordered list of (hex) colours to display in the particle data. | ❌️           | ✔️            | ❌️️          |
+| `tinted_leaves`     | Displays coloured falling leaves around you. You can specify an ordered list of (hex) colours to display in the particle data.   | ❌️           | ❌️️           | ✔️           |
 | `flag`              | Displays a pride flag in dust particles around you. You can specify the flag to display in the particle data.                    | ✔️           | ✔️            | ️✔️          |
-| `flag_potion`       | Displays a pride flag in potion particles around you. You can specify the flag to display in the particle data.                  | ❌            | ✔️            | ️❌           |
-| `item`              | Displays an item particle around you. You can specify the item to display particles of in the particle data.                     | ❌            | ✔️            | ✔️           |
+| `flag_potion`       | Displays a pride flag in potion particles around you. You can specify the flag to display in the particle data.                  | ❌️           | ✔️            | ️❌️          |
+| `item`              | Displays an item particle around you. You can specify the item to display particles of in the particle data.                     | ❌️           | ✔️            | ✔️           |
 
 I try to regularly add new particle options whenever Minecraft does.
 
