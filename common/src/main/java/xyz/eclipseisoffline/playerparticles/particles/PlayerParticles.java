@@ -1,5 +1,7 @@
 package xyz.eclipseisoffline.playerparticles.particles;
 
+import net.minecraft.core.particles.GeyserBaseParticleOptions;
+import net.minecraft.core.particles.GeyserParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SculkChargeParticleOptions;
 import net.minecraft.core.particles.ShriekParticleOption;
@@ -110,6 +112,20 @@ public enum PlayerParticles {
             .withSlot(ParticleSlot.AROUND, 1, 1.0)
             .withInterval(2)
             .build()),
+    PAUSE_MOB_GROWTH(new AmbientPlusParticle(ParticleTypes.PAUSE_MOB_GROWTH, 0.15)),
+    RESET_MOB_GROWTH(new AmbientPlusParticle(ParticleTypes.RESET_MOB_GROWTH, 0.15)),
+    SULFUR_CUBE_GOO(new SimplePlayerParticle(ParticleTypes.SULFUR_CUBE_GOO, ParticleSlot.BELOW)),
+    NOXIOUS_GAS(new SimplePlayerParticle.Builder(ParticleTypes.NOXIOUS_GAS)
+            .withSlot(ParticleSlot.BELOW, 1, 0.01)
+            .withSlot(ParticleSlot.AROUND, 1, 0.01)
+            .withInterval(3)
+            .build()),
+    GEYSER_POOF(new SimplePlayerParticle.Builder(new GeyserBaseParticleOptions(ParticleTypes.GEYSER_POOF, 1, 0.0F))
+            .withSlot(ParticleSlot.BELOW, 1, 0.01)
+            .withSlot(ParticleSlot.AROUND, 1, 0.01)
+            .withInterval(3)
+            .build()),
+    GEYSER_PLUME(new SimplePlayerParticle(new GeyserParticleOptions(ParticleTypes.GEYSER_PLUME, 1), ParticleSlot.ABOVE)),
     PALE_OAK_LEAVES(new PaleOakLeavesParticle()),
     TINTED_LEAVES(new TintedLeavesParticle()),
     SONIC_BOOM(new SonicBoomParticle()),
